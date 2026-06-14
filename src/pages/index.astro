@@ -1,0 +1,114 @@
+---
+const DASH = "http://34.70.171.152:3000/d/arena-show";
+const services = [
+  { icon: "🧾", name: "Edge Ledger API", color: "#00ffe1",
+    desc: "46 000+ сделок, edge-матрица по рыночным режимам. JSON — бесплатно. CSV-экспорт + конфиги стратегий — PRO $10/мес.",
+    link: "/api/pricing", cta: "Pricing API" },
+  { icon: "🛡️", name: "Alpha Gatekeeper", color: "#ffd166",
+    desc: "ML + regime фильтр твоих TradingView-вебхуков. Блокирует входы против режима. 100 событий/мес бесплатно, $15/мес unlimited.",
+    link: "http://34.70.171.152:8092/", cta: "Подключить" },
+  { icon: "🎲", name: "$DUST Predictions", color: "#00ff9d",
+    desc: "Бесплатные прогноз-рынки: какой бот выиграет неделю? Очки, не деньги — без регуляторных рисков.",
+    link: "http://34.70.171.152:8090/", cta: "Ставить" },
+  { icon: "🃏", name: "Bot Cards", color: "#ff00ea",
+    desc: "93 карточки ботов: родословная, стиль, статистика — как коллекционные карты.",
+    link: "http://34.70.171.152:8080/", cta: "Смотреть" },
+  { icon: "🎛️", name: "Grid Lab — пульт", color: "#22d3ee",
+    desc: "Грид-боты на ATR-калибровке: Turbo/Wide, fee-firewall, breakout-защита. Живой статус + Start/Stop/Recenter. Paper. Реал-код по запросу.",
+    link: "http://34.70.171.152:8095/", cta: "Пульт" },
+  { icon: "🔬", name: "Strategy Autopsy", color: "#ff4455",
+    desc: "Честный разбор наших убытков: где теряем, почему, и что из этого следует. Никто так не делает.",
+    link: "http://34.70.171.152:3000/d/arena-autopsy", cta: "Вскрытие" },
+  { icon: "💎", name: "Inner Circle", color: "#b366ff",
+    desc: "Research-access: внутренние отчёты лаборатории, ранний доступ к находкам. Скоро.",
+    link: "https://t.me/bitai1_bot", cta: "@bitai1_bot" },
+  { icon: "🎯", name: "AI-Agent Reliability Audit", color: "#ff9900",
+    desc: "Флагман: делаю production AI-агентов безопасными за 72ч — стресс-тест инъекций, Decision Trace, Rollback. От бесплатной диагностики.",
+    link: "https://cryptoguidessite.vercel.app/guides/ai-agent-reliability-audit", cta: "Узнать" },
+];
+---
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sovereign Arena — открытая лаборатория алгоритмических гипотез</title>
+  <meta name="description" content="150+ торговых ботов соревнуются на live-данных Binance. Paper trading. Логи публичны. Поражения публичны." />
+  <style>
+    :root { --bg:#05060f; --cyan:#00ffe1; --pink:#ff00ea; --gold:#ffd166; --text:#e8f6ff; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--bg); color:var(--text); font-family:'Inter',system-ui,sans-serif; line-height:1.55; }
+    a { color:var(--cyan); }
+    .wrap { max-width:1100px; margin:0 auto; padding:0 20px; }
+    header { padding:80px 0 50px; text-align:center;
+      background: radial-gradient(ellipse at 50% -20%, #1a0033 0%, #001a3d 45%, var(--bg) 80%); }
+    h1 { font-size:clamp(34px,6vw,64px); font-weight:900; letter-spacing:2px;
+      background:linear-gradient(90deg,var(--cyan),var(--pink)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .sub { margin:18px auto 0; max-width:680px; color:#9fdcff; font-size:18px; }
+    .stats { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin:36px 0 8px; }
+    .stat { background:#0c1428; border:1px solid #00ffe133; border-radius:14px; padding:16px 26px; min-width:150px; }
+    .stat b { display:block; font-size:30px; color:var(--cyan); font-variant-numeric:tabular-nums; }
+    .stat span { font-size:13px; color:#7fa8c9; }
+    .cta-row { margin-top:34px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+    .btn { padding:13px 26px; border-radius:10px; font-weight:800; text-decoration:none; font-size:16px; }
+    .btn-main { background:var(--cyan); color:#001a1a; box-shadow:0 0 30px #00ffe155; }
+    .btn-ghost { border:1.5px solid var(--pink); color:var(--pink); }
+    section { padding:56px 0; }
+    h2 { font-size:28px; font-weight:900; letter-spacing:1px; margin-bottom:24px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; }
+    .card { background:#0c1428; border:1px solid #ffffff14; border-radius:16px; padding:22px; display:flex; flex-direction:column; gap:10px; }
+    .card h3 { font-size:19px; }
+    .card p { font-size:14.5px; color:#b9d4e8; flex:1; }
+    .card a.cta { font-weight:700; font-size:14px; }
+    .honest { background:#160a1e; border:1px solid #ff00ea44; border-radius:18px; padding:28px; }
+    .honest h2 { color:var(--gold); }
+    .honest p { color:#d9c2e8; margin-bottom:12px; }
+    footer { padding:40px 0 60px; border-top:1px solid #ffffff12; color:#6f8fa8; font-size:13.5px; }
+    footer a { color:#9fdcff; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>SOVEREIGN ARENA</h1>
+      <p class="sub">Открытая лаборатория алгоритмических гипотез. 150+ ботов торгуют на live-данных Binance виртуальным капиталом. Без денег. Без обещаний прибыли. Все логи публичны.</p>
+      <div class="stats" id="stats">
+        <div class="stat"><b id="s-trades">68k+</b><span>paper-сделок в логе</span></div>
+        <div class="stat"><b id="s-bots">150+</b><span>ботов live 24/7</span></div>
+        <div class="stat"><b id="s-days">90+</b><span>дней публичных логов</span></div>
+        <div class="stat"><b id="s-edges">1</b><span>OOS-подтверждённый эдж</span></div>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-main" href={DASH}>🏁 Смотреть гонку live</a>
+        <a class="btn btn-ghost" href="https://t.me/bitai1_bot">🤖 Telegram-бот</a>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <h2>🛒 Сервисы лаборатории</h2>
+      <div class="grid">
+        {services.map(s => (
+          <div class="card" style={`border-top:3px solid ${s.color}`}>
+            <h3 style={`color:${s.color}`}>{s.icon} {s.name}</h3>
+            <p>{s.desc}</p>
+            <a class="cta" href={s.link} style={`color:${s.color}`}>{s.cta} →</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap honest">
+      <h2>Honest disclaimer — почему нам можно верить</h2>
+      <p>Это не сигнал-сервис и не «AI предсказывает крипту». Это исследовательская лаборатория: 150+ ботов — это не 150 независимых доказательств, а коррелированные вариации гипотез, которые мы публично тестируем и публично хороним.</p>
+      <p>Мы публикуем и победы, и поражения — включая дни в минусе. Отрицательные результаты это часть честного research-процесса: они показывают, как edge работает на самом деле. Платформы, которые показывают только победы, врут.</p>
+      <p>Мы продаём прозрачность и инструменты (данные, фильтры, отчёты) — не обещание прибыли. Не financial advice. Реальными деньгами не торгуем и чужие не принимаем.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p>Sovereign Arena · paper trading research lab · <a href="https://t.me/+89QF2dWJbG44MDI6">TG-канал @BiTFormer</a> · <a href="https://t.me/bitai1_bot">@bitai1_bot</a></p>
+      <p style="margin-top:8px">Данные
