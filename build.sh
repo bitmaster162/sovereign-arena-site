@@ -10,9 +10,7 @@ tar -xJf r68.tar.xz -C stage
 [ "$(find stage -type f | wc -l | tr -d ' ')" = "54" ]
 (cd stage && sha256sum -c ../r68_manifest.sha256)
 grep -q '"release_id": "R68"' stage/_release.json
-grep -q 'e5c4554516dbc61e139d15b2e08508b7c7360894' stage/_release.json
-grep -q '7ced4f5e1f4fa17b86d8f8faf1eedf2744ed52ca' stage/_release.json
 grep -q '569ce21a2db436332adb1133a856bb93ae773dd11c248d52af0943d8a22a7069' stage/_release.json
 find stage -mindepth 1 -maxdepth 1 ! -name vercel.json -exec cp -a {} out/ \;
 [ "$(find out -type f | wc -l | tr -d ' ')" = "53" ]
-echo R68_GIT_MIRROR_PASS stage_files=54 output_files=53 head=e5c4554516dbc61e139d15b2e08508b7c7360894 tree=7ced4f5e1f4fa17b86d8f8faf1eedf2744ed52ca payload_sha=569ce21a2db436332adb1133a856bb93ae773dd11c248d52af0943d8a22a7069
+echo R68_GIT_MIRROR_PASS stage_files=54 output_files=53 source_head=e5c4554516dbc61e139d15b2e08508b7c7360894 source_tree=7ced4f5e1f4fa17b86d8f8faf1eedf2744ed52ca payload_sha=569ce21a2db436332adb1133a856bb93ae773dd11c248d52af0943d8a22a7069
