@@ -1,6 +1,1 @@
-{
-  "rewrites": [
-    { "source": "/api/:path*", "destination": "http://34.70.171.152:8091/api/:path*" },
-    { "source": "/gate/:path*", "destination": "http://34.70.171.152:8092/:path*" }
-  ]
-}
+{"buildCommand":"bash build.sh","outputDirectory":"out","installCommand":"echo no-install","cleanUrls":true,"trailingSlash":false}
