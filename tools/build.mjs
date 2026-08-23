@@ -22,6 +22,7 @@ const expected = [
   "pulse-status.json",
   "pulse.html",
   "research-log.html",
+  "sovereign-twin.html",
   "triage.html",
   "vercel.json",
 ];
