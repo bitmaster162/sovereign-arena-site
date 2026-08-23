@@ -1,6 +1,6 @@
 {
   "schema": "sovereign-arena.ecosystem-registry.v1",
-  "generated_from": "R51 truth-boundary anchor + verified later public navigation identities",
+  "generated_from": "R51 truth-boundary anchor + verified later public navigation identities + ContinuityOS Productization R1",
   "runtime_telemetry": false,
   "entries": [
     {"id":"arena","label":"Sovereign Arena","kind":"paper-research-lab","href":"/","internal":true},
@@ -13,7 +13,8 @@
     {"id":"arb-radar","label":"Арб-радар","kind":"external-research-surface","href":"https://sovereign-arb-radar.vercel.app","internal":false,"source_status":"DISCOVERED_UNBOUND"},
     {"id":"grid-vip","label":"Грид-копитрейд","kind":"external-grid-surface","href":"https://sovereign-grid-vip.vercel.app","internal":false,"source_status":"PARTIAL"},
     {"id":"boards","label":"Доски","kind":"internal-route","href":"/boards","internal":true},
-    {"id":"continuityos","label":"ContinuityOS","kind":"internal-route","href":"/continuityos","internal":true},
+    {"id":"continuityos","label":"ContinuityOS","kind":"internal-product-route","href":"/continuityos","internal":true,"source_status":"R21H_LOCAL_RUNTIME_VALIDATED"},
+    {"id":"sovereign-twin","label":"Sovereign Twin","kind":"internal-engineering-proof-route","href":"/sovereign-twin","internal":true,"source_status":"R21H_FINAL_PASS"},
     {"id":"bitevo","label":"BitEvo","kind":"canonical-product","href":"https://bitevoagentsite.vercel.app/","internal":false,"source_status":"SOURCE_BUILD_READBACK_VERIFIED"},
     {"id":"crypto-guides","label":"Crypto Guides","kind":"content-library","href":"https://cryptoguidessite.vercel.app/","internal":false,"source_status":"GIT_BOUND_CONTENT_UNDER_REVIEW"},
     {"id":"channel","label":"Канал","kind":"public-channel","href":"https://t.me/BitmasterTm","internal":false},
