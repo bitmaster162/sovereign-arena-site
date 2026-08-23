@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "qualify:claims": "node tools/qualify_claims.mjs",
-    "build": "node tools/build.mjs",
+    "build": "node tools/apply_rnext_overlay.mjs && node tools/build.mjs && node --test tests/*.test.mjs",
     "test": "node --test tests/*.test.mjs",
     "verify": "npm run overlay:rnext && npm run build && npm test",
     "overlay:rnext": "node tools/apply_rnext_overlay.mjs",
