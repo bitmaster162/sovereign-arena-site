@@ -16,6 +16,7 @@ const routes = [
   ["/guide", "STATIC_DEMO"],
   ["/pulse", "LIVE_DEGRADED"],
   ["/research-log", "PAPER_ONLY"],
+  ["/sovereign-twin", "STATIC_DEMO"],
   ["/triage", "STATIC_DEMO"],
 ];
 const allowedStatuses = new Set([
@@ -50,6 +51,7 @@ test("strict prebuilt output contains only approved deployment files", async () 
     "pulse-status.json",
     "pulse.html",
     "research-log.html",
+    "sovereign-twin.html",
     "triage.html",
     "vercel.json",
   ];
@@ -158,7 +160,7 @@ test("conflicting product counts and historical offers are visibly qualified", a
   assert.doesNotMatch(index, /6 ИИ-оркестраторов \(/);
   assert.doesNotMatch(index, /100 событий бесплатно/);
   assert.doesNotMatch(index, /реальные коллы для VIP/);
-  assert.doesNotMatch(index, />299\/мес →</);
+  assert.doesNotMatch(index, />299\/мес →/);
   assert.doesNotMatch(index, /A\/B-лаборатория грид-стратегий: 3 плотности/);
   assert.match(index, /exact\/current count не подтверждён/);
   assert.match(index, /Offer snapshot · verify scope/);
@@ -200,7 +202,6 @@ test("all internal page links resolve in the candidate", async () => {
   }
 });
 
-
 test("R-next overlay is registry-driven and does not inherit stale navigation/product authority", async () => {
   const claims = JSON.parse(await readFile(path.join(root, "data/claim-dispositions.json"), "utf8"));
   assert.equal(claims.invariants.can_trade, false);
@@ -217,6 +218,7 @@ test("R-next overlay is registry-driven and does not inherit stale navigation/pr
     assert.doesNotMatch(html, /Operator Decision Sprint/);
     assert.doesNotMatch(html, /bitevoagentsite\.vercel\.app\/intake"/);
     assert.match(html, /can_trade=false|can_trade: false|paper-only/i);
+    assert.match(html, /href="\/sovereign-twin"/);
   }
 
   const guide = await readFile(path.join(dist, "guide.html"), "utf8");

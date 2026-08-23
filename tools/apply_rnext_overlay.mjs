@@ -7,7 +7,7 @@ const siteDir = path.join(root, "site");
 const registry = JSON.parse(await readFile(path.join(root, "data/ecosystem-registry.json"), "utf8"));
 const byId = new Map(registry.entries.map((entry) => [entry.id, entry]));
 
-const required = ["guide","ai-audit","research-log","triage","pulse","grids","arb-radar","grid-vip","boards","continuityos","bitevo","crypto-guides","channel","contact"];
+const required = ["guide","ai-audit","research-log","triage","pulse","grids","arb-radar","grid-vip","boards","continuityos","sovereign-twin","bitevo","crypto-guides","channel","contact"];
 for (const id of required) if (!byId.has(id)) throw new Error(`registry missing ${id}`);
 
 const link = (id, label, extra = "") => {
@@ -27,6 +27,7 @@ const nav = `<nav class="sa-topnav"><div class="sa-topnav-in"><a class="sa-brand
   link("grid-vip","🟢 Грид-копитрейд"),
   link("boards","📊 Доски"),
   link("continuityos","🧠 ContinuityOS"),
+  link("sovereign-twin","🧬 Sovereign Twin"),
   '<span class="sa-sep"></span>',
   link("bitevo","🤖 BitEvo"),
   link("crypto-guides","📚 Crypto Guides"),
@@ -44,6 +45,7 @@ const footer = `<footer class="sa-footer"><div class="sa-foot-in"><div class="sa
   link("pulse","📟 Pulse"),
   link("grids","🟢 Грид"),
   link("continuityos","🧠 ContinuityOS"),
+  link("sovereign-twin","🧬 Sovereign Twin"),
   link("channel","✈️ @BitmasterTm"),
   link("contact","🔒 @BiTFormer"),
 ].join("")}</div><div class="sa-disc">Sovereign Arena · BitEvo · paper/research evidence lab · can_trade=false · capital_permission=DENY · not financial advice</div></div></footer>`;
@@ -91,7 +93,7 @@ for (const name of (await readdir(siteDir)).filter((name) => name.endsWith(".htm
 
 console.log(JSON.stringify({
   result: "PASS",
-  overlay: "R-next-local-1",
+  overlay: "R-next-local-1+continuity-productization-r1",
   registry_entries: registry.entries.length,
   canonical_audit: canonicalAudit,
   intake: intakeUrl,
