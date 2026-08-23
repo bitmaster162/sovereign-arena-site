@@ -1,0 +1,42 @@
+{
+  "schema": "codex04.r51.deployment_template.v1",
+  "approved": false,
+  "automatic_deploy": false,
+  "target_provider": "Vercel",
+  "target_project_id": "prj_yp0tLCr4MWGQUvTuJrW28bwu3EcF",
+  "source_directory": "dist",
+  "build_command": "npm run verify",
+  "expected_file_count": 11,
+  "expected_files": [
+    "ai-audit.html",
+    "boards.html",
+    "continuityos.html",
+    "grids.html",
+    "guide.html",
+    "index.html",
+    "pulse-status.json",
+    "pulse.html",
+    "research-log.html",
+    "triage.html",
+    "vercel.json"
+  ],
+  "candidate_head": "BIND_FROM_RETURN_MANIFEST.CANDIDATE_HEAD",
+  "preconditions": [
+    "Human sets approved=true in a separate reviewed copy.",
+    "Candidate HEAD/tree and ZIP SHA match the return manifest.",
+    "npm run verify passes in a clean checkout.",
+    "External CTA and source links are rechecked at approval time.",
+    "No credential is read from or stored in this package.",
+    "A preview is reviewed before any production alias change.",
+    "Production rollback deployment identity is recorded before activation."
+  ],
+  "forbidden": [
+    "automatic production deployment",
+    "production alias mutation from this work order",
+    "credential access",
+    "Scheduler/service/runtime mutation",
+    "trading or capital effect"
+  ],
+  "can_trade": false,
+  "capital_permission": "DENY"
+}

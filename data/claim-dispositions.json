@@ -1,0 +1,13 @@
+{
+  "schema": "sovereign-arena.claim-dispositions.v1",
+  "candidate": "R-next-local-1",
+  "invariants": {"can_trade": false, "capital_permission": "DENY"},
+  "claims": [
+    {"id":"arena.pulse.live","route":"/pulse","class":"runtime-currentness","observed":"/api/pulse HTTP_404","disposition":"LIVE_DEGRADED","render_live_value":false},
+    {"id":"arena.counts.catalog","route":"/","class":"runtime-currentness","disposition":"DATE_AS_SNAPSHOT","snapshot_date":"2026-07-22"},
+    {"id":"arena.audit.commercial","route":"/ai-audit","class":"commercial-authority","disposition":"HISTORICAL_ONLY","canonical_authority":"https://bitevoagentsite.vercel.app/agent-authority-audit"},
+    {"id":"arena.grid.capital","route":"/grids","class":"capital-boundary","disposition":"PAPER_ONLY","can_trade":false,"capital_permission":"DENY"},
+    {"id":"arena.continuityos.install","route":"/continuityos","class":"package-installability","disposition":"SOURCE_ONLY_UNTIL_REGISTRY_VERIFIED"},
+    {"id":"arena.crypto-guides.count","route":"/guide","class":"content-currentness","disposition":"REMOVE_STALE_COUNT","canonical_authority":"https://cryptoguidessite.vercel.app/"}
+  ]
+}

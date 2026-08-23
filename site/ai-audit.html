@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="ru"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI-Agent Reliability Audit — static reference and dated incident case | Sovereign Arena</title>
+<meta name="description" content="STATIC_DEMO: описание audit format и датированный incident case 2026-07-21. Pricing, 72h SLA и conversion не подтверждены.">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0d12;--fg:#eaf0f6;--muted:#9db0c6;--cyan:#34d3ee;--violet:#b366ff;--gold:#ffb22e;--green:#34e57a;--red:#ff5c7a;--card:#0c1428;--border:#ffffff14}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font-family:"Space Grotesk",system-ui,sans-serif;line-height:1.55}
+a{color:var(--cyan);text-decoration:none}.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+header{text-align:center;padding:64px 20px 36px}
+.chip{display:inline-block;border:1px solid #b366ff66;color:var(--violet);border-radius:30px;padding:5px 15px;font-size:13px;margin-bottom:16px}
+h1{font-size:clamp(32px,6vw,56px);font-weight:900;margin:0;letter-spacing:-1px;background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{margin:16px auto 0;max-width:640px;color:#bcd6ee;font-size:18px}
+.cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-block;padding:13px 26px;border-radius:9px;font-weight:600;font-size:16px}
+.btn-main{background:var(--green);color:#06140c;box-shadow:0 0 30px rgba(52,229,122,.3)}
+.btn-ghost{border:1px solid #2c3645;color:var(--fg)}
+section{padding:40px 0;border-top:1px solid var(--border)}
+h2{font-size:26px;font-weight:900;margin:0 0 8px;color:var(--gold)}
+.lead{color:var(--muted);margin:0 0 18px}
+p{color:#cfe4f5}
+.case{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:22px}
+table{width:100%;border-collapse:collapse;margin-top:8px;font-size:14.5px}
+td,th{text-align:left;padding:11px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+th{color:var(--violet);font-size:13px;text-transform:uppercase;letter-spacing:.4px}
+td:first-child{color:var(--fg);font-weight:600;white-space:nowrap}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));margin-top:10px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
+.card h3{margin:0 0 6px;font-size:16px;color:var(--cyan)}
+.card p{margin:0;font-size:14px;color:#b9d4e8}
+.metric{display:flex;gap:26px;flex-wrap:wrap;justify-content:center;margin:18px 0}
+.metric b{display:block;font-size:30px;color:var(--green);font-weight:900;line-height:1}
+.metric span{font-size:12px;color:var(--muted)}
+.price{display:flex;gap:16px;flex-wrap:wrap}
+.tier{flex:1;min-width:240px;background:var(--card);border:1px solid var(--border);border-radius:15px;padding:22px}
+.tier.free{border-color:#34e57a55}.tier .amt{font-size:26px;font-weight:900;color:var(--gold);margin:6px 0}
+footer{padding:44px 20px;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid var(--border)}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;margin-left:6px}
+.tag.g{background:#34e57a22;color:var(--green)}
+</style><style id="r51-truth-css">
+.r51-truth{border-bottom:1px solid #334155;background:#111827;color:#e5e7eb;font-family:Inter,"Space Grotesk",system-ui,sans-serif}
+.r51-truth-in{max-width:1120px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.r51-status,.r51-link-state,.r51-card-state{display:inline-flex;align-items:center;border:1px solid currentColor;border-radius:999px;padding:3px 8px;font:700 11px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.04em;white-space:nowrap}
+.r51-status{color:#fbbf24}.r51-truth-copy{flex:1;min-width:240px;color:#cbd5e1;font-size:13px}
+.r51-truth-meta{color:#94a3b8;font-size:11px}
+.r51-primary-cta{display:inline-flex;align-items:center;border-radius:8px;background:#22c55e;color:#04130a!important;padding:8px 12px;font-weight:800;font-size:13px;text-decoration:none!important}
+.r51-link-state{color:#fbbf24;background:#422006;margin:2px 7px 2px 0}.r51-card-state{color:#fca5a5;background:#450a0a;margin:2px 7px 2px 0}
+.r51-snapshot{max-width:1120px;margin:0 auto 18px;padding:12px 16px;border:1px solid #334155;border-radius:10px;background:#0f172a;color:#cbd5e1;font-size:13px}
+.r51-policy{margin:24px 0;padding:20px;border:1px solid #f59e0b;border-radius:12px;background:#2a1b05;color:#fef3c7}
+.r51-policy h2{margin-top:0}.r51-policy li{margin:8px 0}
+.r51-offline-panel{max-width:960px;margin:36px auto;padding:20px;border:1px solid #7f1d1d;border-radius:12px;background:#260d12;color:#fecaca}
+.r51-source-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:14px 0}
+.r51-source-cell{border:1px solid #334155;border-radius:8px;padding:10px;background:#0f172a}
+.r51-source-cell b{display:block;color:#e2e8f0}.r51-source-cell span{color:#94a3b8;font-size:12px}
+@media(max-width:640px){.r51-truth-in{align-items:flex-start}.r51-primary-cta{width:100%;justify-content:center}.r51-truth-meta{width:100%}table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}.r51-policy{padding:16px}body .install{max-width:100%;overflow-x:auto;flex-wrap:wrap}body .two{grid-template-columns:minmax(0,1fr)!important;max-width:100%;min-width:0}body .two>*{min-width:0}body pre{max-width:100%}}
+</style></head><body><style id="sa-nav-css">.sa-topnav{position:sticky;top:0;z-index:99999;background:rgba(10,13,18,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid #1f2733;font-family:"Space Grotesk",system-ui,-apple-system,sans-serif}.sa-topnav-in{max-width:1120px;margin:0 auto;padding:9px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}.sa-brand{color:#34e57a;font-weight:700;font-size:15px;white-space:nowrap;text-decoration:none}.sa-links{display:flex;gap:4px;flex-wrap:wrap;align-items:center}.sa-links a{color:#c8d2de;text-decoration:none;font-size:13px;font-weight:500;padding:6px 10px;border-radius:7px;white-space:nowrap;transition:background .15s,color .15s}.sa-links a:hover{background:#12171f;color:#eaf0f6}.sa-links a.sa-active{background:rgba(52,229,122,.13);color:#34e57a}.sa-sep{display:inline-block;width:1px;height:15px;background:#2c3645;margin:0 5px}.sa-footer{border-top:1px solid #1f2733;background:#0a0d12;padding:30px 20px;margin-top:48px}.sa-foot-in{max-width:1120px;margin:0 auto;text-align:center;font-family:"Space Grotesk",system-ui,sans-serif}.sa-eco-row{display:flex;gap:8px 16px;flex-wrap:wrap;justify-content:center;font-size:13px}.sa-eco-row a{color:#c8d2de;text-decoration:none}.sa-eco-row a:hover{color:#34e57a}.sa-disc{margin-top:14px;color:#61707f;font-size:12.5px}@media(max-width:680px){.sa-sep{display:none}}@media(max-width:680px){.sa-topnav-in{gap:8px;padding:8px 12px}.sa-links{gap:2px}.sa-links a{padding:5px 7px;font-size:12px}.sa-brand{font-size:13.5px}}</style><nav class="sa-topnav"><div class="sa-topnav-in"><a class="sa-brand" href="/">⚡ Sovereign Arena</a><div class="sa-links"><a href="/guide">🗺️ Путеводитель</a><a href="/ai-audit">🎯 AI-Audit</a><a href="/research-log">📓 Research Log</a><a href="/triage">🛠️ Triage</a><a href="/pulse">📟 Pulse</a><a href="/grids">🟢 Грид</a><a href="https://sovereign-arb-radar.vercel.app" target="_blank" rel="noopener">⚖️ Арб-радар</a><a href="https://sovereign-grid-vip.vercel.app" target="_blank" rel="noopener">🟢 Грид-копитрейд</a><a href="/boards">📊 Доски</a><a href="/continuityos">🧠 ContinuityOS</a><span class="sa-sep"></span><a href="https://bitevoagentsite.vercel.app/" target="_blank" rel="noopener">🤖 BitEvo</a><a href="https://cryptoguidessite.vercel.app/" target="_blank" rel="noopener">📚 Crypto Guides</a><a href="https://t.me/BitmasterTm" target="_blank" rel="noopener">✈️ Канал</a><a href="https://t.me/+89QF2dWJbG44MDI6" target="_blank" rel="noopener">🔒 @BiTFormer</a></div></div></nav><section class="r51-truth" aria-label="Surface truth status" data-surface-status="STATIC_DEMO"><div class="r51-truth-in"><strong class="r51-status">STATIC_DEMO</strong><span class="r51-truth-copy">Описание услуги и датированный incident case. Текущую доступность Arena или ботов страница не утверждает.</span><span class="r51-truth-meta">source=dpl_HvHdXyfam6V82vihvfc9X3DEbDzk · observed=2026-07-29T10:04:34Z</span><a class="r51-primary-cta" href="https://bitevoagentsite.vercel.app/audit-intake" target="_blank" rel="noopener" data-cta-status="STATIC_DEMO" title="Local scope builder; testing authorization remains NOT GRANTED">Agent Authority & Evidence Audit · prepare scope →</a></div></section><script>(function(){var p=(location.pathname.replace(/\/+$/,"")||"/");document.querySelectorAll(".sa-links a").forEach(function(a){var h=(a.getAttribute("href").replace(/\/+$/,"")||"/");if(h===p)a.classList.add("sa-active");});})();</script>
+<header>
+  <div class="chip">Флагман · production AI reliability</div>
+  <h1>AI-Agent Reliability Audit · historical Arena surface</h1><p class="sub">Current commercial authority: <a href="https://bitevoagentsite.vercel.app/agent-authority-audit" target="_blank" rel="noopener">BitEvo Agent Authority & Evidence Audit</a>. This Arena page preserves a bounded historical incident/research view.</p>
+  <p class="sub">STATIC_DEMO audit format и датированный incident case. Historical claims про 72h, pricing и Telegram conversion не являются текущим оффером; доступен client-only intake brief.</p>
+  <div class="metric">
+    <div><b>72ч*</b><span>historical target · unverified</span></div>
+    <div><b>7</b><span>классов отказов</span></div>
+    <div><b>UNVERIFIED</b><span>historical pricing claim</span></div>
+  </div>
+  <div class="cta-row">
+    <a class="btn btn-main" href="https://bitevoagentsite.vercel.app/audit-intake" target="_blank" rel="noopener" data-cta-status="STATIC_DEMO">Open canonical BitEvo audit scope →</a>
+    <a class="btn btn-ghost" href="#case">Датированный кейс ниже</a>
+  </div>
+</header>
+
+<section id="case"><div class="wrap">
+  <h2>Датированный incident case — 2026-07-21</h2>
+  <p class="lead">Incident record от 2026-07-21 описывает production-систему и исторический count 150+; это не текущая live-проверка.</p>
+  <div class="case">
+    <table>
+      <tr><th>Этап</th><th>Что было</th></tr>
+      <tr><td>Симптом</td><td>Публичные дашборды — «No data» на BTC, режиме, funding. Витрина для внешних людей выглядит сломанной.</td></tr>
+      <tr><td>Ложные следы</td><td>Источник данных жив (запрос возвращает строки). Боты торгуют. Сервисы «запущены». Мониторинг — всё зелено.</td></tr>
+      <tr><td>Корень</td><td>Security-hardening тремя днями ранее молча убрал <code>PG_DSN</code> у <b>7 фоновых сборщиков</b> → они падали в тихий restart-loop → таблицы замёрзли на 2д 23ч.</td></tr>
+      <tr><td>Диагностика</td><td>Проверил свежесть таблиц (не датасорс) → нашёл заморозку → лог сборщиков → <code>PG_DSN is required</code> → сопоставил с датой hardening. ~1 час.</td></tr>
+      <tr><td>Фикс</td><td>systemd drop-in с восстановленным окружением для 7 сервисов. market_state: 3 дня → 2 минуты. btc: протухший 64025 → живой 66194. 0 потерь данных.</td></tr>
+    </table>
+  </div>
+  <p style="margin-top:14px">Это каноничный failure mode автономных систем: инфра-изменение рвёт скрытую зависимость, агент «работает», но тихо деградирует — и всплывает, когда уже дорого. Аудит ловит именно это.</p>
+</div></section>
+
+<section><div class="wrap">
+  <h2>7 классов отказов, которые мы триажим</h2>
+  <div class="grid">
+    <div class="card"><h3>Тихая деградация данных <span class="tag g">кейс выше</span></h3><p>Пайплайн жив, но данные стоят: потерянные env-зависимости, замёрзшие коллекторы, битые cron.</p></div>
+    <div class="card"><h3>Ложная безопасность гейта</h3><p>Гейт ловит опасные команды, но не понимает логику приложения — subtle-баг в разрешённом скрипте проходит.</p></div>
+    <div class="card"><h3>Границы отката</h3><p>Rollback покрывает локальные файлы, но не prod-API, удалённый репозиторий или транзакцию — это надо знать заранее.</p></div>
+    <div class="card"><h3>Loop / cost-blowout</h3><p>Агент зацикливается или жжёт бюджет на тривиальных задачах без anti-looping и cost-routing.</p></div>
+    <div class="card"><h3>Утечка секретов</h3><p>Ключи в логах, чекпоинтах, URL-параметрах — частичные токены открытым текстом.</p></div>
+    <div class="card"><h3>Тихий no-op</h3><p>CLI/сервис возвращает exit 0, но по факту ничего не делает (обрезанный main, битый импорт).</p></div>
+    <div class="card"><h3>Дрейф памяти/состояния</h3><p>Смена модели или сессии теряет контекст; факты переписываются вместо supersede — история рушится.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Как это работает</h2>
+  <table>
+    <tr><td>1. Подключение</td><td>Даёшь доступ к логам/метрикам агента или системы (read-only достаточно).</td></tr>
+    <tr><td>2. Авто-триаж</td><td>Прогон по 7 классам: где тихо деградирует, где гейт дырявый, где границы отката, где секреты.</td></tr>
+    <tr><td>3. Отчёт за 72ч</td><td>Найденные риски по приоритету P0–P2, с воспроизведением и конкретным фиксом.</td></tr>
+  </table>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Быстрый self-check — 60 секунд</h2>
+  <p class="lead">7 вопросов по 7 классам отказов. Отвечай честно: «нет / не уверен» = скрытый риск.</p>
+  <div class="case" id="sc">
+    <div class="q" data-i="0"><b>1.</b> Если данные твоего агента замрут — ты узнаешь в тот же день (алерт на свежесть)?</div>
+    <div class="q" data-i="1"><b>2.</b> Твой гейт/проверки понимают логику приложения, а не только «опасные команды»?</div>
+    <div class="q" data-i="2"><b>3.</b> Знаешь точно, что покрывает твой rollback — и что НЕ покрывает (prod-API, удалённый репо)?</div>
+    <div class="q" data-i="3"><b>4.</b> Есть anti-looping и лимит бюджета на задачу (токены/шаги)?</div>
+    <div class="q" data-i="4"><b>5.</b> Уверен, что секретов нет в логах, чекпоинтах и URL-параметрах?</div>
+    <div class="q" data-i="5"><b>6.</b> Проверяешь, что сервис реально сделал работу — а не вернул тихий exit 0?</div>
+    <div class="q" data-i="6"><b>7.</b> При смене модели/сессии контекст и состояние агента сохраняются?</div>
+    <button class="btn btn-main" id="scBtn" style="margin-top:8px">Посчитать риск →</button>
+    <div id="scOut" style="margin-top:16px"></div>
+  </div>
+  <style>
+    #sc .q{padding:12px 0;border-bottom:1px solid var(--border);font-size:15px;color:#e6f0fa}
+    #sc .opts{margin-top:8px;display:flex;gap:8px}
+    #sc .opt{padding:6px 16px;border:1px solid #2c3645;border-radius:8px;cursor:pointer;font-size:14px;color:var(--muted);user-select:none}
+    #sc .opt.yes.on{background:#34e57a22;border-color:var(--green);color:var(--green)}
+    #sc .opt.no.on{background:#ff5c7a22;border-color:var(--red);color:var(--red)}
+  </style>
+  <script>
+    (function(){
+      var answers={};
+      document.querySelectorAll('#sc .q').forEach(function(q){
+        var i=q.dataset.i;
+        var wrap=document.createElement('div'); wrap.className='opts';
+        [['yes','Да, уверен'],['no','Нет / не уверен']].forEach(function(o){
+          var b=document.createElement('span'); b.className='opt '+o[0]; b.textContent=o[1];
+          b.onclick=function(){ answers[i]=o[0]; q.querySelectorAll('.opt').forEach(function(x){x.classList.remove('on')}); b.classList.add('on'); };
+          wrap.appendChild(b);
+        });
+        q.appendChild(wrap);
+      });
+      document.getElementById('scBtn').onclick=function(){
+        var risk=0, answered=0;
+        for(var i=0;i<7;i++){ if(answers[i]){answered++; if(answers[i]==='no')risk++;} }
+        var out=document.getElementById('scOut');
+        if(answered<7){ out.innerHTML='<p style="color:var(--gold)">Ответь на все 7 вопросов ('+answered+'/7).</p>'; return; }
+        var lvl, col, msg;
+        if(risk<=1){ lvl='Низкий риск'; col='var(--green)'; msg='Базовая гигиена на месте. Deep-аудит найдёт тонкие места, но пожара нет.'; }
+        else if(risk<=4){ lvl='Средний риск'; col='var(--gold)'; msg='Есть '+risk+' незакрытых класса — типичная зона, где ломается тихо. Client-only intake brief поможет структурировать проверку; submission backend не подтверждён.'; }
+        else { lvl='Высокий риск'; col='var(--red)'; msg='Незакрыто '+risk+' из 7. Это ровно тот профиль, где деградация всплывает, когда уже дорого. Начни с client-only intake brief; submission backend не подтверждён.'; }
+        out.innerHTML='<div style="font-size:22px;font-weight:900;color:'+col+'">'+lvl+' — '+risk+'/7 классов открыто</div>'+
+          '<p style="margin:8px 0 12px">'+msg+'</p>'+
+          '<a class="btn btn-main" href="https://bitevoagentsite.vercel.app/audit-intake" target="_blank" rel="noopener" data-cta-status="STATIC_DEMO">Open canonical BitEvo audit scope →</a>';
+        out.scrollIntoView({behavior:'smooth',block:'nearest'});
+      };
+    })();
+  </script>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Оффер</h2>
+  <div class="price">
+    <div class="tier free"><div>Historical offer snapshot</div><div class="amt">UNVERIFIED</div><p style="color:#b9d4e8;font-size:14px">Production artifact заявлял $0 / 72h; pricing, SLA и delivery не подтверждены. Intake — client-only brief builder.</p><a class="btn btn-main" href="https://bitevoagentsite.vercel.app/audit-intake" target="_blank" rel="noopener" data-cta-status="STATIC_DEMO" style="margin-top:6px">Open canonical BitEvo audit scope →</a></div>
+    <div class="tier"><div>Deep Audit · historical offer snapshot</div><div class="amt">UNVERIFIED</div><p style="color:#b9d4e8;font-size:14px">Artifact заявлял pricing от $1.5k; current scope, price и availability не подтверждены.</p><a class="btn btn-ghost" href="https://bitevoagentsite.vercel.app/audit-intake" target="_blank" rel="noopener" data-cta-status="STATIC_DEMO" style="margin-top:6px">Open canonical BitEvo audit scope →</a></div>
+  </div>
+</div></section>
+
+<footer class="sa-footer"><div class="sa-foot-in"><div class="sa-eco-row"><a href="/">🏁 Sovereign Arena</a><a href="https://bitevoagentsite.vercel.app/" target="_blank" rel="noopener">🤖 BitEvo</a><a href="https://cryptoguidessite.vercel.app/" target="_blank" rel="noopener">📚 Crypto Guides</a><a href="https://sovereign-arb-radar.vercel.app" target="_blank" rel="noopener">⚖️ Арб-радар</a><a href="https://sovereign-grid-vip.vercel.app" target="_blank" rel="noopener">🟢 Грид-копитрейд</a><a href="/guide">🗺️ Путеводитель</a><a href="/pulse">📟 Pulse</a><a href="/grids">🟢 Грид</a><a href="/continuityos">🧠 ContinuityOS</a><a href="https://t.me/BitmasterTm" target="_blank" rel="noopener">✈️ @BitmasterTm</a><a href="https://t.me/+89QF2dWJbG44MDI6" target="_blank" rel="noopener">🔒 @BiTFormer</a></div><div class="sa-disc">Sovereign Arena · BitEvo · paper/research evidence lab · can_trade=false · capital_permission=DENY · not financial advice</div></div></footer>
+</body></html>

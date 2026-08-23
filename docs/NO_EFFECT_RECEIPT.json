@@ -1,0 +1,25 @@
+{
+  "schema": "codex04.r51.no_effect_receipt.v1",
+  "production_deployed": false,
+  "production_alias_changed": false,
+  "vercel_project_mutated": false,
+  "github_pushed": false,
+  "github_merged": false,
+  "legacy_authoring_root_modified": false,
+  "credentials_accessed": false,
+  "dependencies_installed": false,
+  "scheduler_mutated": false,
+  "service_mutated": false,
+  "remote_runtime_mutated": false,
+  "orders_created": false,
+  "wallet_or_exchange_effect": false,
+  "can_trade": false,
+  "capital_permission": "DENY",
+  "effect_scope": [
+    "read-only public HTTPS discovery",
+    "read-only Vercel project/deployment inspection",
+    "disposable local candidate files",
+    "loopback-only static verification server",
+    "local Git commits and return artifacts"
+  ]
+}

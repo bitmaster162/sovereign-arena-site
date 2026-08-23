@@ -1,0 +1,136 @@
+{
+  "schema": "codex04.r51.route_matrix.v1",
+  "observed_at": "2026-07-29T10:52:28Z",
+  "classification_contract": {
+    "LIVE_VERIFIED": "Reachable real source, validated schema, and acceptable visible freshness.",
+    "LIVE_DEGRADED": "Live-intended surface with an explicitly visible unavailable, stale, or partial state.",
+    "STATIC_DEMO": "Intentional static/reference surface with no live-data claim.",
+    "PAPER_ONLY": "Simulation or research evidence only; no order or capital effect.",
+    "OFFLINE": "Disabled or unavailable surface."
+  },
+  "routes": [
+    {
+      "route": "/",
+      "surface": "Sovereign Arena catalog",
+      "classification": "STATIC_DEMO",
+      "page_http": 200,
+      "data_source": "production artifact snapshot",
+      "freshness": "NOT_APPLICABLE",
+      "count_basis": "Snapshot values copied from deployment dpl_HvHdXyfam6V82vihvfc9X3DEbDzk, dated 2026-07-22 and visibly footnoted.",
+      "cta": "https://bitevoagentsite.vercel.app/intake",
+      "desktop": "PASS",
+      "mobile": "PASS",
+      "screenshot": "evidence/screenshots/home-desktop-1280x720.jpg"
+    },
+    {
+      "route": "/ai-audit",
+      "surface": "AI-Agent Reliability Audit",
+      "classification": "STATIC_DEMO",
+      "page_http": 200,
+      "data_source": "dated incident narrative",
+      "freshness": "NOT_APPLICABLE",
+      "count_basis": "Incident and counts are explicitly dated 2026-07-21; no current telemetry claim.",
+      "cta": "https://bitevoagentsite.vercel.app/intake",
+      "desktop": "PASS",
+      "mobile": "PASS"
+    },
+    {
+      "route": "/boards",
+      "surface": "Arena dashboard catalog",
+      "classification": "LIVE_DEGRADED",
+      "page_http": 200,
+      "data_source": "DuckDNS/Grafana destinations",
+      "freshness": "UNVERIFIED",
+      "count_basis": "18-board catalog snapshot dated 2026-07-03.",
+      "cta": "39 canonicalized HTTPS dashboard/service links, each visibly LIVE_DEGRADED",
+      "desktop": "PASS",
+      "mobile": "PASS",
+      "screenshot": "evidence/screenshots/boards-degraded-desktop-1280x720.jpg"
+    },
+    {
+      "route": "/continuityos",
+      "surface": "ContinuityOS overview",
+      "classification": "STATIC_DEMO",
+      "page_http": 200,
+      "data_source": "verified GitHub repository link",
+      "freshness": "NOT_APPLICABLE",
+      "count_basis": "Prior tool/test/gate counts are explicitly described as not reverified by this site candidate.",
+      "cta": "https://github.com/bitmaster162/continuityos",
+      "desktop": "PASS",
+      "mobile": "PASS",
+      "screenshot": "evidence/screenshots/continuityos-desktop-1280x720.jpg"
+    },
+    {
+      "route": "/grids",
+      "surface": "Grid guide",
+      "classification": "PAPER_ONLY",
+      "page_http": 200,
+      "data_source": "historical static examples",
+      "freshness": "UNAVAILABLE",
+      "count_basis": "Scanner count and prices are visibly labeled historical snapshots.",
+      "cta": "https://bitevoagentsite.vercel.app/intake (HTTP 200; client-only brief builder, STATIC_DEMO workflow)",
+      "desktop": "PASS",
+      "mobile": "PASS",
+      "screenshot": "evidence/screenshots/grids-policy-desktop-1280x720.jpg",
+      "policy": "Spot inventory requires loss budget/range exit; leveraged or derivative inventory requires a pre-entry hard stop. No fresh source blocks execution."
+    },
+    {
+      "route": "/guide",
+      "surface": "Product guide",
+      "classification": "STATIC_DEMO",
+      "page_http": 200,
+      "data_source": "dated product-map snapshot",
+      "freshness": "NOT_APPLICABLE",
+      "count_basis": "Guide and bot counts are explicitly snapshot-labeled.",
+      "cta": "https://bitevoagentsite.vercel.app/intake",
+      "desktop": "PASS",
+      "mobile": "PASS"
+    },
+    {
+      "route": "/pulse",
+      "surface": "Pulse data status",
+      "classification": "LIVE_DEGRADED",
+      "page_http": 200,
+      "data_source": "/pulse-status.json",
+      "data_http": 200,
+      "schema": "arena.pulse.status.v1",
+      "schema_validation": "PASS",
+      "producer_heartbeat": null,
+      "freshness": "UNAVAILABLE",
+      "visible_state": "DATA_UNAVAILABLE",
+      "metrics": null,
+      "cta": "https://bitevoagentsite.vercel.app/intake",
+      "desktop": "PASS",
+      "mobile": "PASS",
+      "screenshot": "evidence/screenshots/pulse-desktop-1280x720.jpg"
+    },
+    {
+      "route": "/research-log",
+      "surface": "Research log",
+      "classification": "PAPER_ONLY",
+      "page_http": 200,
+      "data_source": "production artifact snapshot",
+      "freshness": "UNAVAILABLE",
+      "count_basis": "The page now says it does not read arena_memento_reco and does not claim current values.",
+      "cta": "https://bitevoagentsite.vercel.app/intake",
+      "desktop": "PASS",
+      "mobile": "PASS"
+    },
+    {
+      "route": "/triage",
+      "surface": "Browser-only reliability triage",
+      "classification": "STATIC_DEMO",
+      "page_http": 200,
+      "data_source": "client-only questionnaire",
+      "freshness": "NOT_APPLICABLE",
+      "count_basis": "Static checklist count; no backend or live telemetry.",
+      "cta": "https://bitevoagentsite.vercel.app/intake",
+      "desktop": "PASS",
+      "mobile": "PASS"
+    }
+  ],
+  "capital_effect": {
+    "can_trade": false,
+    "capital_permission": "DENY"
+  }
+}

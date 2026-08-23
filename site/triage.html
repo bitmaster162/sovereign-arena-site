@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="ru"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Agent Reliability Triage — open tool (7 classes)</title>
+<meta name="description" content="Free open reliability triage for AI agents. 20 checks across 7 failure classes → prioritized report. No signup.">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0d12;--fg:#eaf0f6;--muted:#9db0c6;--cyan:#34d3ee;--violet:#b366ff;--gold:#ffb22e;--green:#34e57a;--red:#ff5c7a;--card:#0c1428;--border:#ffffff14}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font-family:"Space Grotesk",system-ui,sans-serif;line-height:1.5}
+a{color:var(--cyan);text-decoration:none}.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+header{text-align:center;padding:56px 20px 22px}
+.chip{display:inline-block;border:1px solid #b366ff66;color:var(--violet);border-radius:30px;padding:5px 15px;font-size:13px;margin-bottom:14px}
+h1{font-size:clamp(28px,5vw,46px);font-weight:900;margin:0;letter-spacing:-1px;background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{margin:14px auto 0;max-width:600px;color:#bcd6ee;font-size:17px}
+.cls{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:12px 0}
+.cls h3{margin:0 0 4px;font-size:16px;color:var(--gold)}
+.cls .d{color:var(--muted);font-size:13px;margin-bottom:10px}
+.chk{display:flex;align-items:flex-start;gap:10px;padding:7px 0;font-size:14.5px;color:#dbe8f5;cursor:pointer}
+.chk input{margin-top:3px;width:16px;height:16px;accent-color:var(--green);flex:none}
+.bar{position:sticky;bottom:0;background:linear-gradient(180deg,transparent,var(--bg) 30%);padding:18px 0;text-align:center}
+.btn{display:inline-block;padding:13px 26px;border-radius:9px;font-weight:600;font-size:16px;border:0;cursor:pointer;font-family:inherit}
+.btn-main{background:var(--green);color:#06140c}
+#report{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin:14px 0;display:none}
+#report h2{margin:0 0 6px;color:var(--gold)}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}
+.pill{font-size:11px;padding:2px 9px;border-radius:20px;font-weight:700}
+.pill.ok{background:#34e57a22;color:var(--green)}.pill.mid{background:#ffb22e22;color:var(--gold)}.pill.bad{background:#ff5c7a22;color:var(--red)}
+footer{padding:40px 20px;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:24px}
+.mini{color:var(--muted);font-size:12.5px;text-align:center;margin-top:8px}
+</style><style id="r51-truth-css">
+.r51-truth{border-bottom:1px solid #334155;background:#111827;color:#e5e7eb;font-family:Inter,"Space Grotesk",system-ui,sans-serif}
+.r51-truth-in{max-width:1120px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.r51-status,.r51-link-state,.r51-card-state{display:inline-flex;align-items:center;border:1px solid currentColor;border-radius:999px;padding:3px 8px;font:700 11px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.04em;white-space:nowrap}
+.r51-status{color:#fbbf24}.r51-truth-copy{flex:1;min-width:240px;color:#cbd5e1;font-size:13px}
+.r51-truth-meta{color:#94a3b8;font-size:11px}
+.r51-primary-cta{display:inline-flex;align-items:center;border-radius:8px;background:#22c55e;color:#04130a!important;padding:8px 12px;font-weight:800;font-size:13px;text-decoration:none!important}
+.r51-link-state{color:#fbbf24;background:#422006;margin:2px 7px 2px 0}.r51-card-state{color:#fca5a5;background:#450a0a;margin:2px 7px 2px 0}
+.r51-snapshot{max-width:1120px;margin:0 auto 18px;padding:12px 16px;border:1px solid #334155;border-radius:10px;background:#0f172a;color:#cbd5e1;font-size:13px}
+.r51-policy{margin:24px 0;padding:20px;border:1px solid #f59e0b;border-radius:12px;background:#2a1b05;color:#fef3c7}
+.r51-policy h2{margin-top:0}.r51-policy li{margin:8px 0}
+.r51-offline-panel{max-width:960px;margin:36px auto;padding:20px;border:1px solid #7f1d1d;border-radius:12px;background:#260d12;color:#fecaca}
+.r51-source-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:14px 0}
+.r51-source-cell{border:1px solid #334155;border-radius:8px;padding:10px;background:#0f172a}
+.r51-source-cell b{display:block;color:#e2e8f0}.r51-source-cell span{color:#94a3b8;font-size:12px}
+@media(max-width:640px){.r51-truth-in{align-items:flex-start}.r51-primary-cta{width:100%;justify-content:center}.r51-truth-meta{width:100%}table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}.r51-policy{padding:16px}body .install{max-width:100%;overflow-x:auto;flex-wrap:wrap}body .two{grid-template-columns:minmax(0,1fr)!important;max-width:100%;min-width:0}body .two>*{min-width:0}body pre{max-width:100%}}
+</style></head><body><style id="sa-nav-css">.sa-topnav{position:sticky;top:0;z-index:99999;background:rgba(10,13,18,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid #1f2733;font-family:"Space Grotesk",system-ui,-apple-system,sans-serif}.sa-topnav-in{max-width:1120px;margin:0 auto;padding:9px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}.sa-brand{color:#34e57a;font-weight:700;font-size:15px;white-space:nowrap;text-decoration:none}.sa-links{display:flex;gap:4px;flex-wrap:wrap;align-items:center}.sa-links a{color:#c8d2de;text-decoration:none;font-size:13px;font-weight:500;padding:6px 10px;border-radius:7px;white-space:nowrap;transition:background .15s,color .15s}.sa-links a:hover{background:#12171f;color:#eaf0f6}.sa-links a.sa-active{background:rgba(52,229,122,.13);color:#34e57a}.sa-sep{display:inline-block;width:1px;height:15px;background:#2c3645;margin:0 5px}.sa-footer{border-top:1px solid #1f2733;background:#0a0d12;padding:30px 20px;margin-top:48px}.sa-foot-in{max-width:1120px;margin:0 auto;text-align:center;font-family:"Space Grotesk",system-ui,sans-serif}.sa-eco-row{display:flex;gap:8px 16px;flex-wrap:wrap;justify-content:center;font-size:13px}.sa-eco-row a{color:#c8d2de;text-decoration:none}.sa-eco-row a:hover{color:#34e57a}.sa-disc{margin-top:14px;color:#61707f;font-size:12.5px}@media(max-width:680px){.sa-sep{display:none}}@media(max-width:680px){.sa-topnav-in{gap:8px;padding:8px 12px}.sa-links{gap:2px}.sa-links a{padding:5px 7px;font-size:12px}.sa-brand{font-size:13.5px}}</style><nav class="sa-topnav"><div class="sa-topnav-in"><a class="sa-brand" href="/">⚡ Sovereign Arena</a><div class="sa-links"><a href="/guide">🗺️ Путеводитель</a><a href="/ai-audit">🎯 AI-Audit</a><a href="/research-log">📓 Research Log</a><a href="/triage">🛠️ Triage</a><a href="/pulse">📟 Pulse</a><a href="/grids">🟢 Грид</a><a href="https://sovereign-arb-radar.vercel.app" target="_blank" rel="noopener">⚖️ Арб-радар</a><a href="https://sovereign-grid-vip.vercel.app" target="_blank" rel="noopener">🟢 Грид-копитрейд</a><a href="/boards">📊 Доски</a><a href="/continuityos">🧠 ContinuityOS</a><span class="sa-sep"></span><a href="https://bitevoagentsite.vercel.app/" target="_blank" rel="noopener">🤖 BitEvo</a><a href="https://cryptoguidessite.vercel.app/" target="_blank" rel="noopener">📚 Crypto Guides</a><a href="https://t.me/BitmasterTm" target="_blank" rel="noopener">✈️ Канал</a><a href="https://t.me/+89QF2dWJbG44MDI6" target="_blank" rel="noopener">🔒 @BiTFormer</a></div></div></nav><section class="r51-truth" aria-label="Surface truth status" data-surface-status="STATIC_DEMO"><div class="r51-truth-in"><strong class="r51-status">STATIC_DEMO</strong><span class="r51-truth-copy">Локальный browser-only self-check: ответы остаются во вкладке; backend и live data отсутствуют.</span><span class="r51-truth-meta">source=dpl_HvHdXyfam6V82vihvfc9X3DEbDzk · observed=2026-07-29T10:04:34Z</span><a class="r51-primary-cta" href="https://bitevoagentsite.vercel.app/audit-intake" target="_blank" rel="noopener" data-cta-status="STATIC_DEMO" title="Local scope builder; testing authorization remains NOT GRANTED">Agent Authority & Evidence Audit · prepare scope →</a></div></section><script>(function(){var p=(location.pathname.replace(/\/+$/,"")||"/");document.querySelectorAll(".sa-links a").forEach(function(a){var h=(a.getAttribute("href").replace(/\/+$/,"")||"/");if(h===p)a.classList.add("sa-active");});})();</script>
+<header>
+  <div class="chip">Open tool · no signup · Apache-2.0 spirit</div>
+  <h1>AI Agent Reliability Triage</h1>
+  <p class="sub">20 проверок по 7 классам отказов. Отметь то, что у тебя РЕАЛЬНО закрыто → получишь приоритизированный отчёт. Ничего не отправляется — считается в браузере.</p>
+</header>
+<div class="wrap" id="app"></div>
+<div class="bar"><button class="btn btn-main" id="run">Собрать отчёт →</button><div class="mini">Приватно: ответы не покидают вкладку.</div></div>
+<div class="wrap"><div id="report"></div></div>
+<footer class="sa-footer"><div class="sa-foot-in"><div class="sa-eco-row"><a href="/">🏁 Sovereign Arena</a><a href="https://bitevoagentsite.vercel.app/" target="_blank" rel="noopener">🤖 BitEvo</a><a href="https://cryptoguidessite.vercel.app/" target="_blank" rel="noopener">📚 Crypto Guides</a><a href="https://sovereign-arb-radar.vercel.app" target="_blank" rel="noopener">⚖️ Арб-радар</a><a href="https://sovereign-grid-vip.vercel.app" target="_blank" rel="noopener">🟢 Грид-копитрейд</a><a href="/guide">🗺️ Путеводитель</a><a href="/pulse">📟 Pulse</a><a href="/grids">🟢 Грид</a><a href="/continuityos">🧠 ContinuityOS</a><a href="https://t.me/BitmasterTm" target="_blank" rel="noopener">✈️ @BitmasterTm</a><a href="https://t.me/+89QF2dWJbG44MDI6" target="_blank" rel="noopener">🔒 @BiTFormer</a></div><div class="sa-disc">Sovereign Arena · BitEvo · paper/research evidence lab · can_trade=false · capital_permission=DENY · not financial advice</div></div></footer>
+<script>
+var CLASSES=[
+ {n:'Тихая деградация данных',d:'Пайплайн жив, но данные стоят.',c:['Алерт на свежесть данных (max-timestamp) с порогом','Env/секреты сборщиков под контролем версий и проверяются на старте','Health-check ловит crash-loop фоновых воркеров']},
+ {n:'Ложная безопасность гейта',d:'Гейт видит команды, но не логику.',c:['Опасные операции требуют явного approve','Гейт различает argv и shell-семантику (&&, pipe, redirect)','Разрешённые скрипты тоже под ревью, не только блок-лист']},
+ {n:'Границы отката',d:'Rollback покрывает не всё.',c:['Явно документировано, что откат покрывает (и что нет)','Prod-API / удалённый репо / транзакции — вне авто-отката, есть план','Есть точка восстановления перед рискованной операцией']},
+ {n:'Loop / cost-blowout',d:'Зацикливание и пережог бюджета.',c:['Anti-looping guard на повторяющиеся шаги','Лимит бюджета (токены/шаги) на задачу','Дорогие модели только на дорогих задачах (cost-routing)']},
+ {n:'Утечка секретов',d:'Ключи там, где не должны быть.',c:['Секретов нет в логах и чекпоинтах','Никаких токенов в URL-параметрах','Ротация ключей при засветке — есть процедура']},
+ {n:'Тихий no-op',d:'exit 0, но ничего не сделано.',c:['CLI/сервис проверяется на реальный эффект, не только код возврата','Битый импорт/обрезанный main ловится тестом/preflight','Smoke-тест ключевого пути в CI']},
+ {n:'Дрейф памяти/состояния',d:'Смена модели/сессии теряет нить.',c:['Контекст и состояние переживают смену модели','Исправления фактов через supersede, не delete (история цела)','Хендофф между сессиями воспроизводим']}
+];
+var app=document.getElementById('app');
+CLASSES.forEach(function(cl,ci){
+ var box=document.createElement('div'); box.className='cls';
+ box.innerHTML='<h3>'+(ci+1)+'. '+cl.n+'</h3><div class="d">'+cl.d+'</div>';
+ cl.c.forEach(function(txt,qi){
+  var l=document.createElement('label'); l.className='chk';
+  l.innerHTML='<input type="checkbox" data-c="'+ci+'"> <span>'+txt+'</span>';
+  box.appendChild(l);
+ });
+ app.appendChild(box);
+});
+document.getElementById('run').onclick=function(){
+ var rep=document.getElementById('report'); var html='<h2>Твой reliability-отчёт</h2>';
+ var totalOpen=0, totalChecks=0;
+ CLASSES.forEach(function(cl,ci){
+  var boxes=document.querySelectorAll('input[data-c="'+ci+'"]');
+  var done=0; boxes.forEach(function(b){if(b.checked)done++;});
+  var open=boxes.length-done; totalOpen+=open; totalChecks+=boxes.length;
+  var cls = open===0?'ok':(open===1?'mid':'bad');
+  var label = open===0?'закрыт':(open+' открыто');
+  html+='<div class="rrow"><span>'+(ci+1)+'. '+cl.n+'</span><span class="pill '+cls+'">'+label+'</span></div>';
+ });
+ var pct=Math.round(100*(totalChecks-totalOpen)/totalChecks);
+ var verdict = totalOpen<=2?['Крепко','var(--green)']:(totalOpen<=6?['Средне — есть тихие дыры','var(--gold)']:['Рыхло — высокий риск тихих отказов','var(--red)']);
+ html='<h2>Твой reliability-отчёт</h2><div style="font-size:20px;font-weight:900;color:'+verdict[1]+'">'+pct+'% закрыто · '+verdict[0]+'</div><p style="color:var(--muted);margin:6px 0 12px">Открыто '+totalOpen+' из '+totalChecks+' проверок. Начни с классов, помеченных красным.</p>'+html.replace('<h2>Твой reliability-отчёт</h2>','');
+ html+='<div style="margin-top:14px"><a class="btn btn-main" href="https://t.me/BitmasterTm" target="_blank">Разобрать открытые классы — бесплатный триаж →</a></div>';
+ rep.innerHTML=html; rep.style.display='block'; rep.scrollIntoView({behavior:'smooth'});
+};
+</script>
+</body></html>

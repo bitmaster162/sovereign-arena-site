@@ -1,0 +1,22 @@
+{
+  "schema": "sovereign-arena.ecosystem-registry.v1",
+  "generated_from": "R51 truth-boundary anchor + verified later public navigation identities",
+  "runtime_telemetry": false,
+  "entries": [
+    {"id":"arena","label":"Sovereign Arena","kind":"paper-research-lab","href":"/","internal":true},
+    {"id":"guide","label":"Путеводитель","kind":"internal-route","href":"/guide","internal":true},
+    {"id":"ai-audit","label":"AI-Audit history","kind":"historical-service-route","href":"/ai-audit","internal":true},
+    {"id":"research-log","label":"Research Log","kind":"internal-route","href":"/research-log","internal":true},
+    {"id":"triage","label":"Triage","kind":"browser-local-tool","href":"/triage","internal":true},
+    {"id":"pulse","label":"Pulse","kind":"degraded-status-route","href":"/pulse","internal":true},
+    {"id":"grids","label":"Грид","kind":"paper-only-route","href":"/grids","internal":true},
+    {"id":"arb-radar","label":"Арб-радар","kind":"external-research-surface","href":"https://sovereign-arb-radar.vercel.app","internal":false,"source_status":"DISCOVERED_UNBOUND"},
+    {"id":"grid-vip","label":"Грид-копитрейд","kind":"external-grid-surface","href":"https://sovereign-grid-vip.vercel.app","internal":false,"source_status":"PARTIAL"},
+    {"id":"boards","label":"Доски","kind":"internal-route","href":"/boards","internal":true},
+    {"id":"continuityos","label":"ContinuityOS","kind":"internal-route","href":"/continuityos","internal":true},
+    {"id":"bitevo","label":"BitEvo","kind":"canonical-product","href":"https://bitevoagentsite.vercel.app/","internal":false,"source_status":"SOURCE_BUILD_READBACK_VERIFIED"},
+    {"id":"crypto-guides","label":"Crypto Guides","kind":"content-library","href":"https://cryptoguidessite.vercel.app/","internal":false,"source_status":"GIT_BOUND_CONTENT_UNDER_REVIEW"},
+    {"id":"channel","label":"Канал","kind":"public-channel","href":"https://t.me/BitmasterTm","internal":false},
+    {"id":"contact","label":"@BiTFormer","kind":"public-contact","href":"https://t.me/+89QF2dWJbG44MDI6","internal":false}
+  ]
+}

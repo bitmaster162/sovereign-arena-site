@@ -1,0 +1,90 @@
+{
+  "schema": "codex04.r51.product_count_cta_audit.v1",
+  "observed_at": "2026-07-29T11:07:21Z",
+  "count_policy": "A count is current only when its source identity and freshness are verified. Artifact-only counts remain visibly dated or UNVERIFIED.",
+  "counts": [
+    {
+      "surface": "/",
+      "claims": ["81k+ paper trades", "157 configurations", "90+ log days", "5 regime edges", "8 paper experiments", "150+ configurations"],
+      "basis": "Exact production artifact deployed 2026-07-22",
+      "current_verified": false,
+      "visible_disposition": "Dated snapshot with count-provenance footnote"
+    },
+    {
+      "surface": "/guide",
+      "claims": ["94 guides", "150+ configurations"],
+      "basis": "Artifact snapshot dated 2026-07-02/2026-07-22",
+      "current_verified": false,
+      "visible_disposition": "Dated snapshot"
+    },
+    {
+      "surface": ["/", "/guide", "/boards"],
+      "claims": ["6 AI orchestrators", "10+ AI models", "10 AI orchestrators"],
+      "basis": "Contradictory claims within the exact production artifact",
+      "current_verified": false,
+      "visible_disposition": "Conflict stated; exact/current roster count explicitly not confirmed"
+    },
+    {
+      "surface": "/boards",
+      "claims": ["18 public dashboards", "150+ configurations", "1 paper trade", "100% WR", "74.9%"],
+      "basis": "Catalog snapshot dated 2026-07-03 plus read-only link qualification",
+      "current_verified": false,
+      "visible_disposition": "18 destinations are reachability-verified; performance, roster, trade-count and panel-data claims are historical/unverified"
+    },
+    {
+      "surface": ["/", "/continuityos"],
+      "claims": ["12 tools", "18 tests", "9 gates"],
+      "basis": "Artifact product copy",
+      "current_verified": false,
+      "visible_disposition": "GitHub source link verified; historical tool/test/gate counts explicitly not reverified"
+    },
+    {
+      "surface": "/",
+      "claims": ["Gatekeeper 100 events / $15", "Grid Lab 3 densities / 4 protections", "Inner Circle $299 / 50 seats"],
+      "basis": "Historical offer copy in exact production artifact",
+      "current_verified": false,
+      "visible_disposition": "Historical/unverified offer wording; no current purchase CTA"
+    },
+    {
+      "surface": "/ai-audit",
+      "claims": ["72h", "$0", "from $1.5k"],
+      "basis": "Historical offer copy in exact production artifact",
+      "current_verified": false,
+      "visible_disposition": "UNVERIFIED; all primary action links route to client-only STATIC_DEMO intake brief"
+    }
+  ],
+  "ctas": [
+    {
+      "destination": "https://bitevoagentsite.vercel.app/intake",
+      "http_status": 200,
+      "link_status": "LIVE_VERIFIED",
+      "workflow_status": "STATIC_DEMO",
+      "visible_label": "Operator Decision Sprint · prepare brief",
+      "qualification": "Client-only brief generation and clipboard copy; no submission backend observed."
+    },
+    {
+      "destination": "https://github.com/bitmaster162/continuityos",
+      "http_status": 200,
+      "link_status": "LIVE_VERIFIED",
+      "qualification": "Expected public source repository."
+    },
+    {
+      "destination_group": "Sovereign Arena DuckDNS/Grafana",
+      "link_status": "LIVE_DEGRADED",
+      "qualification": "Endpoints and representative dashboard definitions reachable; panel-data freshness and heartbeat unverified."
+    },
+    {
+      "destination_group": "Telegram",
+      "link_status": "LIVE_DEGRADED",
+      "qualification": "Landing pages reachable; bot, join, conversion, and delivery flows not exercised."
+    },
+    {
+      "destination_group": "Internal routes",
+      "http_status": 200,
+      "qualification": "All discovered internal page links resolve in the local prebuilt candidate."
+    }
+  ],
+  "result": "PASS_WITH_EXPLICIT_UNVERIFIED_HISTORICAL_CLAIMS",
+  "can_trade": false,
+  "capital_permission": "DENY"
+}
