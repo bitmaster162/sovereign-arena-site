@@ -1,0 +1,91 @@
+{
+  "schema": "codex04.r51.read_only_link_audit.v1",
+  "receipt_created_at": "2026-07-29T11:07:21Z",
+  "observed_at": null,
+  "method": "Read-only HTTP GET qualification; no authentication, submission, write, or deployment.",
+  "public_dashboards": [
+    {"url":"https://sovereign-arena.duckdns.org/public-dashboards/24013b88ad91420a9bc697c85d823d59","status":200,"latency_ms":1956},
+    {"url":"https://sovereign-arena.duckdns.org/public-dashboards/280f490a8916492da6ea6886bb628db4","status":200,"latency_ms":1920},
+    {"url":"https://sovereign-arena.duckdns.org/public-dashboards/3d689ceb97894ad38b2af5814efdcbef","status":200,"latency_ms":1879},
+    {"url":"https://sovereign-arena.duckdns.org/public-dashboards/4b2fa403e5a9446b8e42cb472625eaa2","status":200,"latency_ms":1839},
+    {"url":"https://sovereign-arena.duckdns.org/public-dashboards/8272b177466841fd8a7be58c8939c842","status":200,"latency_ms":1800},
+    {"url":"https://sovereign-arena.duckdns.org/public-dashboards/8ad1e304ae1f4d118c61255caba26e5f","status":200,"latency_ms":1751},
+    {"url":"https://sovereign-arena.duckdns.org/public-dashboards/a759f147544e40c78260f8ecdadd7fe4","status":200,"latency_ms":1754},
+    {"url":"https://sovereign-arena.duckdns.org/public-dashboards/b359f6d342064924ac3d3a1aeca4a743","status":200,"latency_ms":1702},
+    {"url":"https://sovereign-arena.duckdns.org/public-dashboards/d415eb6783c4461ea17d2cb5656fa578","status":200,"latency_ms":1199},
+    {"url":"https://sovereign-arena.duckdns.org/public-dashboards/e11898cb347449988c4bd93653807184","status":200,"latency_ms":1251},
+    {"url":"https://sovereign-arena.duckdns.org/public-dashboards/33c5b417b9074515afc791d4ee3ad944","status":200,"latency_ms":742},
+    {"url":"https://sovereign-arena.duckdns.org/public-dashboards/8bb7442a7d8d41f099f2218373eb86f0","status":200,"latency_ms":761},
+    {"url":"https://sovereign-arena.duckdns.org/public-dashboards/906e5b54fa904c64ba9f7fe5de3a3640","status":200,"latency_ms":763},
+    {"url":"https://sovereign-arena.duckdns.org/public-dashboards/9d6e7f3b7b4f4ac29ee6fd0096f47cc7","status":200,"latency_ms":782},
+    {"url":"https://sovereign-arena.duckdns.org/public-dashboards/ac653c59497047bf83ea68a31ac4fe91","status":200,"latency_ms":741},
+    {"url":"https://sovereign-arena.duckdns.org/public-dashboards/b9af05da5ff34fc894a6cc9741545fa6","status":200,"latency_ms":741},
+    {"url":"https://sovereign-arena.duckdns.org/public-dashboards/d1d8585806d44368a02a82b5458b5709","status":200,"latency_ms":744},
+    {"url":"https://sovereign-arena.duckdns.org/public-dashboards/ea270d948b7741b5b37371a0d6c2848d","status":200,"latency_ms":781}
+  ],
+  "grafana_api_samples": [
+    {
+      "url":"https://sovereign-arena.duckdns.org/api/public/dashboards/b9af05da5ff34fc894a6cc9741545fa6",
+      "status":200,
+      "latency_ms":1276,
+      "content_type":"application/json",
+      "bytes":20323,
+      "result":"Real public-dashboard definition; title REGIME RADAR — Public; refresh field 30s. Panel-data freshness was not established."
+    },
+    {
+      "url":"https://sovereign-arena.duckdns.org/api/public/dashboards/8bb7442a7d8d41f099f2218373eb86f0",
+      "status":200,
+      "latency_ms":757,
+      "content_type":"application/json",
+      "bytes":19231,
+      "result":"Real public-dashboard definition; panel-data freshness was not established."
+    },
+    {
+      "url":"https://sovereign-arena.duckdns.org/api/public/dashboards/ea270d948b7741b5b37371a0d6c2848d",
+      "status":200,
+      "latency_ms":746,
+      "content_type":"application/json",
+      "bytes":21919,
+      "result":"Real public-dashboard definition; panel-data freshness was not established."
+    }
+  ],
+  "service_urls": [
+    {"url":"https://sovereign-arena.duckdns.org/gatekeeper/","status":200,"latency_ms":979,"content_type":"application/json","result":"alpha-gatekeeper service descriptor"},
+    {"url":"https://sovereign-arena.duckdns.org/dust/","status":200,"latency_ms":754,"title":"$DUST — Sovereign Arena Prediction Markets"},
+    {"url":"https://sovereign-arena.duckdns.org/cards/","status":200,"latency_ms":792,"title":"Sovereign Arena — All Racers"},
+    {"url":"https://sovereign-arena.duckdns.org/grid/","status":200,"latency_ms":716,"title":"Grid Control"},
+    {"url":"https://sovereign-arena.duckdns.org/svc96/","status":200,"latency_ms":739,"title":"Sovereign Copy"},
+    {"url":"https://sovereign-arena.duckdns.org/svc97/","status":200,"latency_ms":725,"title":"Trade Gate"},
+    {"url":"https://sovereign-arena.duckdns.org/svc98/","status":200,"latency_ms":768,"title":"Low-Cap Scanner"}
+  ],
+  "external_ctas": [
+    {"url":"https://bitevoagentsite.vercel.app/","status":200,"latency_ms":570,"title":"BitEvo — Durable AI Orchestrator & B2B Automation","classification":"LIVE_VERIFIED"},
+    {"url":"https://bitevoagentsite.vercel.app/continuityos","status":200,"latency_ms":510,"title":"ContinuityOS — durable hybrid memory for AI agents & humans","classification":"LIVE_VERIFIED"},
+    {"url":"https://bitevoagentsite.vercel.app/intake","status":200,"latency_ms":476,"title":"BitEvo — Get Started / Intake","classification":"STATIC_DEMO","result":"Reachable client-only Generate Brief and Copy to Clipboard flow; no submission backend observed."},
+    {"url":"https://cryptoguidessite.vercel.app/","status":200,"latency_ms":427,"title":"Crypto & Trading Guides Portal","classification":"LIVE_VERIFIED"},
+    {"url":"https://github.com/bitmaster162/continuityos","status":200,"latency_ms":1209,"classification":"LIVE_VERIFIED","result":"Expected public ContinuityOS repository."},
+    {"url":"https://t.me/bitai1_bot","status":200,"latency_ms":763,"title":"Telegram: Launch @bitai1_bot","classification":"LIVE_DEGRADED","result":"Landing reachability only; bot interaction was not performed."},
+    {"url":"https://t.me/+89QF2dWJbG44MDI6","status":200,"latency_ms":1156,"title":"Telegram: Join Group Chat","classification":"LIVE_DEGRADED","result":"Landing reachability only; join flow was not performed."}
+  ],
+  "summary": {
+    "unique_public_dashboard_urls": 18,
+    "public_dashboard_http_200": 18,
+    "grafana_definition_samples_http_200": 3,
+    "service_urls_http_200": 7,
+    "candidate_duckdns_href_occurrences": 39,
+    "dashboard_classification": "LIVE_DEGRADED"
+  },
+  "limitations": [
+    "Exact observation timestamp was not retained; per-request latency and result were retained.",
+    "The first ten dashboard latencies include an observed HTTP-to-HTTPS redirect.",
+    "Reachability and representative definition JSON were verified; panel-data source, heartbeat, and freshness were not.",
+    "Telegram interaction and intake submission were not performed."
+  ],
+  "effects": {
+    "network_mutation": false,
+    "submission": false,
+    "deployment": false,
+    "can_trade": false,
+    "capital_permission": "DENY"
+  }
+}

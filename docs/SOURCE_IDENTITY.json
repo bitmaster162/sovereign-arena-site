@@ -1,0 +1,100 @@
+{
+  "schema": "codex04.r51.source_identity.v1",
+  "work_order": {
+    "id": "CODEX04-R51-SOVEREIGN-ARENA-TRUTH-REPAIR",
+    "path": "C:\\Users\\coins\\Downloads\\CODEX04_R51_SOVEREIGN_ARENA_TRUTH_REPAIR.md",
+    "sha256": "7518ACCCB2F824051E2CC5384D698C6857EE73E07409C9E8A53940700C91BF7A"
+  },
+  "current_production": {
+    "provider": "Vercel",
+    "team_id": "team_oVflHvk6poDyQRHW88LCTcg8",
+    "project_id": "prj_yp0tLCr4MWGQUvTuJrW28bwu3EcF",
+    "project_name": "sovereign-arena-site",
+    "public_alias": "https://sovereign-arena-site.vercel.app",
+    "deployment_id": "dpl_HvHdXyfam6V82vihvfc9X3DEbDzk",
+    "deployment_url": "sovereign-arena-site-bwgu4y710-bitevo-s-projects.vercel.app",
+    "created_at": "2026-07-22T08:24:35.101Z",
+    "ready_state": "READY",
+    "target": "production",
+    "deployment_meta": {},
+    "source_kind": "CLI_API_PREBUILT_STATIC_ARTIFACT",
+    "uploaded_file_count": 10,
+    "git_bound": false,
+    "repository_root": "NOT_GIT_BOUND",
+    "branch": "NOT_APPLICABLE",
+    "head": "NOT_APPLICABLE",
+    "tree": "NOT_APPLICABLE",
+    "status": "NOT_APPLICABLE",
+    "proof": [
+      "Deployment meta is empty and contains no Git identity.",
+      "Build log says: Downloading 10 deployment files.",
+      "Build completed in /vercel/output in 30ms with no prepared cache files.",
+      "Nine public route bodies were recovered byte-for-byte by read-only HTTPS GET.",
+      "The tenth file is the documented cleanUrls-only vercel.json used by the prebuilt path."
+    ]
+  },
+  "production_artifact_baseline": {
+    "disposable_root": "C:\\tmp\\CODEX04_R51_SOVEREIGN_ARENA_TRUTH_REPAIR_20260729T100434Z",
+    "baseline_branch": "production-artifact-baseline",
+    "baseline_commit": "5105058ddf9450848b8fdc3b7af56f860edfecce",
+    "baseline_tree": "764a8c436ee82d0feb017eaaf5e6628bc41bfaad",
+    "baseline_status": "CLEAN",
+    "files": {
+      "ai-audit.html": "0BD85DEEF5D1D3DA03C183A476517C96BC3AFC89120E272C8DD3EDD62D3A89EB",
+      "boards.html": "204D71EF9D18F403495D96E4837DEBD08F3BE802E4E6F6CC83EFD7508C86DC7F",
+      "continuityos.html": "5368FF596B26D09A2A6D480CCDC9FCE4CAF27746C0ED6486587DD4FC9CAB2FA3",
+      "grids.html": "7AF698303D08E06660174FDC367D5F37CD63A5A0BDF921A3BFF6E9BF0C3D8B90",
+      "guide.html": "F3FDE8BD6CE37E6FD0F3EB44FB8671F6D9ACCA2DA2ED4837DB69078356952F06",
+      "index.html": "33B73EBEB6E7896054FBC1C2EFCED14323788782BD6629232B9BCC25F49D3248",
+      "pulse.html": "1C25B9AA7745791D099F0DEB8FBB509150C5E4B3B76F328E04DF7966333E4BBD",
+      "research-log.html": "346CC20AEABCC0D570B7E92EB1AF7A88E657D80C242D28F772DC3A931D375C97",
+      "triage.html": "874B0EA80B8A5937305A33760DB522A20E7BB0498139EA438427FC55EAD17D44",
+      "vercel.json": "D957A7423E5E2A1D3EF3885BAABCA68B99B8C31707C732088F6DE3DFEE0D6D2C"
+    }
+  },
+  "current_alias_reverification": {
+    "observed_at": "2026-07-29T11:26:35Z",
+    "method": "Read-only Vercel URL fetch followed by SHA-256 over returned UTF-8 response text",
+    "samples": [
+      {
+        "route": "/",
+        "http_status": 200,
+        "bytes": 18683,
+        "sha256": "33B73EBEB6E7896054FBC1C2EFCED14323788782BD6629232B9BCC25F49D3248",
+        "baseline_match": true
+      },
+      {
+        "route": "/pulse",
+        "http_status": 200,
+        "bytes": 8976,
+        "sha256": "1C25B9AA7745791D099F0DEB8FBB509150C5E4B3B76F328E04DF7966333E4BBD",
+        "baseline_match": true
+      }
+    ],
+    "alternate_local_handoff_decision": "REJECTED_AS_SOURCE_IDENTITY",
+    "alternate_local_handoff_reason": "Its index/pulse SHA-256 values differ from both the synthetic baseline and the current public alias; it remains evidence only."
+  },
+  "rejected_authoring_root": {
+    "root": "C:\\PROJECTS\\sovereign-arena-site",
+    "branch": "main",
+    "head": "d0d637fc1f9220c7e9f1d8f099c1b861cefed1bc",
+    "tree": "8f6bf2d3d322b7dae4c248f22d2f9711b89ec028",
+    "upstream_delta": "+0 -1",
+    "status": "DIRTY",
+    "dirty_summary": [
+      "modified src/pages/index.astro",
+      "untracked public/",
+      "untracked src/pages/index_OLD_services_20260721.astro.bak"
+    ],
+    "decision": "READ_ONLY_REJECTED_AS_WRITER_ROOT",
+    "reason": "It is older, dirty, and not byte-equivalent to the current prebuilt production artifact."
+  },
+  "candidate": {
+    "root": "C:\\tmp\\CODEX04_R51_SOVEREIGN_ARENA_TRUTH_REPAIR_20260729T100434Z",
+    "branch": "codex04/r51-sovereign-arena-truth-repair",
+    "head_binding": "BIND_FROM_RETURN_MANIFEST.CANDIDATE_HEAD",
+    "tree_binding": "BIND_FROM_RETURN_MANIFEST.CANDIDATE_TREE",
+    "status_requirement": "CLEAN",
+    "writer_count": 1
+  }
+}

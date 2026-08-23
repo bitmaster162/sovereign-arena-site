@@ -1,0 +1,22 @@
+{
+  "schema": "codex04.r51.teardown_receipt.v1",
+  "stopped_at": "2026-07-29T11:24:21Z",
+  "scope": "Local disposable candidate preview only",
+  "process": {
+    "pid": 27176,
+    "name": "node.exe",
+    "command_line": "\"C:\\Program Files\\nodejs\\node.exe\" tools\\static_server.mjs dist 4173",
+    "identity_verified_before_stop": true,
+    "absent_after_stop": true
+  },
+  "listener": {
+    "port": 4173,
+    "state_after_stop": "ABSENT"
+  },
+  "production_service_mutation": false,
+  "scheduler_mutation": false,
+  "deployment": false,
+  "can_trade": false,
+  "capital_permission": "DENY",
+  "result": "PASS"
+}

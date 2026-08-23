@@ -1,0 +1,22 @@
+{
+  "schema": "codex04.r51.independent_review.v1",
+  "review_scope": "Read-only candidate content, evidence, site/dist equivalence, and work-order requirement matrix",
+  "review_result": "PASS_WITH_NOTES",
+  "substantive_blockers": 0,
+  "confirmed": [
+    "Nine screenshot references match nine physical JPEG evidence files.",
+    "Boards evidence and current page both state LIVE_DEGRADED.",
+    "Stale roster, pricing, and fake-live phrases are absent or explicitly historical/unverified.",
+    "LINK_TESTS and PRODUCT_COUNT_CTA_AUDIT align with current HTML.",
+    "Pulse source shape and browser schema validation are strengthened.",
+    "site and dist are byte-equivalent after the successful build.",
+    "Regression receipt records 9/9 passing tests."
+  ],
+  "non_blocking_notes": [
+    "LINK_TESTS observed_at is null because the exact request timestamp was not retained; this is disclosed, and freshness remains LIVE_DEGRADED.",
+    "Candidate HEAD and tree are intentionally bound by the immutable return manifest to avoid self-referential commit metadata."
+  ],
+  "review_effect": "READ_ONLY",
+  "can_trade": false,
+  "capital_permission": "DENY"
+}

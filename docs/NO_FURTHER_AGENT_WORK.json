@@ -1,0 +1,10 @@
+{
+  "schema": "codex04.r51.no_further_agent_work.v1",
+  "NO_FURTHER_AGENT_WORK": true,
+  "technical_candidate_complete": true,
+  "production_deployment_denied": true,
+  "next_actor": "Robert or explicitly authorized human release operator",
+  "next_action": "Review the immutable return, set approved=true only in a separate release record, run preview verification, and decide whether to promote.",
+  "can_trade": false,
+  "capital_permission": "DENY"
+}

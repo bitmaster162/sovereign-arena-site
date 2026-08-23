@@ -1,0 +1,46 @@
+{
+  "schema": "codex04.r51.build_test_receipt.v1",
+  "observed_at": "2026-07-29T11:07:21Z",
+  "runtime": "Node.js v24.16.0",
+  "install_performed": false,
+  "external_dependencies": 0,
+  "build": {
+    "command": "npm run build",
+    "result": "PASS",
+    "model": "static-prebuilt-allowlist",
+    "text_encoding": "UTF-8",
+    "line_endings": "LF",
+    "output": "dist",
+    "deployment_files": 11
+  },
+  "tests": {
+    "command": "npm run verify",
+    "result": "PASS",
+    "total": 9,
+    "passed": 9,
+    "failed": 0,
+    "coverage": [
+      "strict deployment allowlist",
+      "nine primary routes return HTTP 200",
+      "exactly one allowed classification per route",
+      "Pulse status HTTP 200 and arena.pulse.status.v1 schema",
+      "former /api/pulse fetch removed",
+      "ContinuityOS registry install claim absent",
+      "contextual Grid policy and capital denial",
+      "all 39 DuckDNS links visibly LIVE_DEGRADED and no missing /api/pricing CTA",
+      "conflicting roster counts and historical offer/price claims visibly qualified",
+      "all internal page links resolve"
+    ]
+  },
+  "browser": {
+    "desktop_viewport": "1280x720",
+    "mobile_viewport": "390x844",
+    "mobile_routes": 9,
+    "horizontal_overflow_failures": 0,
+    "console_errors_or_warnings": 0,
+    "pulse_schema_valid_dom": true
+  },
+  "approved": false,
+  "can_trade": false,
+  "capital_permission": "DENY"
+}

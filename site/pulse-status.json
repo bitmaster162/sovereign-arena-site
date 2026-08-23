@@ -1,0 +1,20 @@
+{
+  "schema_version": "arena.pulse.status.v1",
+  "status": "DATA_UNAVAILABLE",
+  "classification": "LIVE_DEGRADED",
+  "source": {
+    "id": "sovereign-arena-pulse-status-evidence",
+    "endpoint": "/pulse-status.json",
+    "availability": "AVAILABLE",
+    "evidence_http": 200,
+    "failed_predecessor_endpoint": "/api/pulse",
+    "failed_predecessor_observation": "HTTP_404"
+  },
+  "observed_at": "2026-07-29T10:04:34Z",
+  "producer_heartbeat": null,
+  "freshness": "UNAVAILABLE",
+  "metrics": null,
+  "reason": "No verified read-only Pulse producer is included in the current prebuilt deployment. The former /api/pulse request returned HTTP 404, so no metric value is rendered.",
+  "can_trade": false,
+  "capital_permission": "DENY"
+}

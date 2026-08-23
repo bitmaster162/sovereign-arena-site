@@ -1,0 +1,34 @@
+{
+  "schema": "codex04.r51.screenshots.v1",
+  "capture_method": "in-app browser viewport screenshots",
+  "desktop_viewport": {
+    "inner_width": 1280,
+    "inner_height": 720,
+    "content_width": 1265
+  },
+  "mobile_viewport": {
+    "inner_width": 390,
+    "inner_height": 844,
+    "content_width": 375
+  },
+  "encoding": "JPEG",
+  "files": [
+    "evidence/screenshots/home-desktop-1280x720.jpg",
+    "evidence/screenshots/home-mobile-390x844.jpg",
+    "evidence/screenshots/pulse-desktop-1280x720.jpg",
+    "evidence/screenshots/pulse-mobile-390x844.jpg",
+    "evidence/screenshots/grids-policy-desktop-1280x720.jpg",
+    "evidence/screenshots/grids-policy-mobile-390x844.jpg",
+    "evidence/screenshots/continuityos-desktop-1280x720.jpg",
+    "evidence/screenshots/continuityos-mobile-390x844.jpg",
+    "evidence/screenshots/boards-degraded-desktop-1280x720.jpg"
+  ],
+  "visual_findings": [
+    "Truth classification and Operator Decision Sprint CTA are visible.",
+    "Pulse visibly renders DATA_UNAVAILABLE, source identity, observed_at, heartbeat, and freshness.",
+    "Grid canonical contextual risk policy is visible.",
+    "ContinuityOS points to source rather than an unqualified registry install.",
+    "DuckDNS/Grafana links are visibly LIVE_DEGRADED: reachable, freshness unverified.",
+    "All mobile routes fit without horizontal page overflow."
+  ]
+}
