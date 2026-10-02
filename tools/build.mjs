@@ -27,6 +27,78 @@ const expected = [
   "vercel.json",
 ];
 
+const visitorSnapshotPrefix = "Снимок данных:";
+
+function cleanCta(anchor) {
+  return anchor.replace(/\sdata-cta-status="[^"]*"/g, "");
+}
+
+function visitorBadgeCopy(status) {
+  if (status === "LIVE_DEGRADED") return "Свежесть не подтверждена";
+  if (status === "OFFLINE") return "Текущая доступность не опубликована";
+  if (status === "LIVE_VERIFIED") return "Проверено на момент снимка";
+  return "Исторический snapshot";
+}
+
+function sanitizePublicHtml(input, name) {
+  let html = input;
+
+  const r51Band = html.match(/<section class="r51-truth"[\s\S]*?<\/section>/);
+  const surfaceBand = html.match(/<section class="surface-truth"[\s\S]*?<\/section>/);
+  const band = r51Band?.[0] || surfaceBand?.[0];
+  if (!band) throw new Error(`${name}: internal truth band missing`);
+
+  let summary;
+  let cta = "";
+  let safety = "";
+
+  if (r51Band) {
+    summary = band.match(/<span class="r51-truth-copy">([\s\S]*?)<\/span>/)?.[1];
+    const ctaMatch = band.match(/<a class="r51-primary-cta"[\s\S]*?<\/a>/);
+    if (ctaMatch) cta = cleanCta(ctaMatch[0]);
+  } else {
+    summary = band.match(/<div class="surface-truth-in">\s*<strong>[\s\S]*?<\/strong>\s*<span>([\s\S]*?)<\/span>/)?.[1];
+    const ctaMatch = band.match(/<a\b[\s\S]*?<\/a>/);
+    if (ctaMatch) cta = cleanCta(ctaMatch[0]);
+    safety = band.match(/<small>([\s\S]*?)<\/small>/)?.[0] || "";
+  }
+
+  if (!summary) throw new Error(`${name}: visitor snapshot summary missing`);
+  const publicBand = `<section class="r51-snapshot" aria-label="Снимок данных"><p><strong>${visitorSnapshotPrefix}</strong> ${summary}</p>${cta}${safety}</section>`;
+  html = html.replace(band, publicBand);
+
+  html = html.replace(/\sdata-(?:surface-status|cta-status|r51-link-status)="[^"]*"/g, "");
+  html = html.replace(
+    /<span class="r51-link-state">([^<]*)<\/span>/g,
+    (_full, status) => `<span>${visitorBadgeCopy(status.trim())}</span>`,
+  );
+  html = html.replace(
+    /<span class="r51-card-state">([^<]*)<\/span>/g,
+    (_full, status) => `<span>${visitorBadgeCopy(status.trim())}</span>`,
+  );
+  html = html.replace(/<strong class="r51-status">[\s\S]*?<\/strong>/g, "");
+  html = html.replace(/<span class="r51-truth-meta">[\s\S]*?<\/span>/g, "");
+
+  const forbidden = [
+    /data-surface-status=/,
+    /data-cta-status=/,
+    /data-r51-link-status=/,
+    /class="r51-status"/,
+    /class="r51-truth-meta"/,
+    /class="r51-link-state"/,
+    /class="r51-card-state"/,
+    /source=dpl_/,
+    /observed=/,
+  ];
+  for (const pattern of forbidden) {
+    if (pattern.test(html)) throw new Error(`${name}: public debug marker survived: ${pattern}`);
+  }
+  if (html.split(visitorSnapshotPrefix).length - 1 !== 1) {
+    throw new Error(`${name}: expected exactly one visitor snapshot line`);
+  }
+  return html;
+}
+
 const actual = (await readdir(source)).sort();
 if (JSON.stringify(actual) !== JSON.stringify(expected)) {
   throw new Error(
@@ -41,7 +113,8 @@ for (const name of expected) {
   if (!(await stat(sourcePath)).isFile()) throw new Error(`${name} is not a file`);
   const sourceText = await readFile(sourcePath, "utf8");
   const canonicalText = sourceText.replaceAll("\r\n", "\n").replaceAll("\r", "\n");
-  await writeFile(path.join(output, name), canonicalText, {
+  const publicText = name.endsWith(".html") ? sanitizePublicHtml(canonicalText, name) : canonicalText;
+  await writeFile(path.join(output, name), publicText, {
     encoding: "utf8",
     flag: "wx",
   });
