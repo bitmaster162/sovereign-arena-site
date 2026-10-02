@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 import { startStaticServer } from "../tools/static_server.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const site = path.join(root, "site");
 const dist = path.join(root, "dist");
 const routes = [
   ["/", "STATIC_DEMO"],
@@ -29,6 +30,20 @@ const allowedStatuses = new Set([
 ]);
 const cryptoRiskDisclaimer = "Здесь — личная практика и исследования автора. Это не инвестиционный совет и не предложение управлять чужими средствами. Торговля криптоактивами может привести к потере всех вложенных денег; прошлые результаты не гарантируют будущих.";
 assert.equal(createHash("sha256").update(cryptoRiskDisclaimer, "utf8").digest("hex"), "6dd6a7500f9265a42e1f35bf0981cfdf1da0217bffcd0e01dc8af5e6d7b232dc");
+const visitorSnapshotPrefix = "Снимок данных:";
+assert.equal(createHash("sha256").update(visitorSnapshotPrefix, "utf8").digest("hex"), "b1ea223400d328d0cc09818bf45db6b3e432d0735d6e8c8aae08552752aac12a");
+
+function routeFile(route) {
+  return route === "/" ? "index.html" : `${route.slice(1)}.html`;
+}
+
+function extractInternalSummary(html) {
+  const r51 = html.match(/<span class="r51-truth-copy">([\s\S]*?)<\/span>/)?.[1];
+  if (r51) return r51;
+  const surface = html.match(/<section class="surface-truth"[\s\S]*?<div class="surface-truth-in">\s*<strong>[\s\S]*?<\/strong>\s*<span>([\s\S]*?)<\/span>/)?.[1];
+  assert.ok(surface, "internal route summary exists");
+  return surface;
+}
 
 let server;
 let origin;
@@ -65,23 +80,28 @@ test("strict prebuilt output contains only approved deployment files", async () 
   }
 });
 
-test("all primary routes return 200 and exactly one allowed truth classification", async () => {
+test("internal classifications stay in source while public routes expose one visitor snapshot", async () => {
   for (const [route, expected] of routes) {
+    const file = routeFile(route);
+    const sourceHtml = await readFile(path.join(site, file), "utf8");
+    const sourceMatches = [...sourceHtml.matchAll(/data-surface-status="([^"]+)"/g)];
+    assert.equal(sourceMatches.length, 1, `${route} internal classification count`);
+    assert.ok(allowedStatuses.has(sourceMatches[0][1]), route);
+    assert.equal(sourceMatches[0][1], expected, route);
+    const summary = extractInternalSummary(sourceHtml);
+
     const response = await fetch(origin + route, { redirect: "manual" });
     assert.equal(response.status, 200, route);
     const html = await response.text();
-    const matches = [...html.matchAll(/data-surface-status="([^"]+)"/g)];
-    assert.equal(matches.length, 1, `${route} classification count`);
-    assert.ok(allowedStatuses.has(matches[0][1]), route);
-    assert.equal(matches[0][1], expected, route);
+    assert.equal(html.split(visitorSnapshotPrefix).length - 1, 1, `${route} visitor snapshot count`);
+    assert.ok(html.includes(summary), `${route} preserves internal route summary verbatim`);
+    assert.doesNotMatch(html, /data-(?:surface-status|cta-status|r51-link-status)=/i, `${route} public status attrs removed`);
+    assert.doesNotMatch(html, /class="(?:r51-status|r51-truth-meta|r51-link-state|r51-card-state)"/i, `${route} public debug badge classes removed`);
+    assert.doesNotMatch(html, /source=dpl_|observed=/i, `${route} source deployment debug metadata removed`);
     assert.match(html, /Agent Authority & Evidence Audit/);
+    assert.match(html, /href="https:\/\/bitevoagentsite\.vercel\.app\/audit-intake"/, `${route} canonical BitEvo audit-intake CTA`);
     assert.equal(html.split(cryptoRiskDisclaimer).length - 1, 1, `${route} exact crypto disclaimer once`);
     assert.doesNotMatch(html, /мы не получаем доступа к вашим средствам|we never get access to your funds/i, `${route} unconfirmed funds-access claim omitted`);
-    assert.match(
-      html,
-      /href="https:\/\/bitevoagentsite\.vercel\.app\/audit-intake"[^>]*data-cta-status="STATIC_DEMO"/,
-      `${route} canonical BitEvo audit-intake CTA`,
-    );
     assert.match(html, /can_trade=false|can_trade: false|paper-only/i);
   }
 });
@@ -111,7 +131,13 @@ test("Pulse status request is 200, schema-valid, and contains no metrics", async
   assert.equal(data.capital_permission, "DENY");
 });
 
-test("Pulse no longer requests the missing /api/pulse and renders an explicit degraded state", async () => {
+test("Pulse machine evidence artifact is unchanged by public HTML sanitization", async () => {
+  const sourceData = JSON.parse(await readFile(path.join(site, "pulse-status.json"), "utf8"));
+  const distData = JSON.parse(await readFile(path.join(dist, "pulse-status.json"), "utf8"));
+  assert.deepEqual(distData, sourceData);
+});
+
+test("Pulse no longer requests the missing /api/pulse and keeps fail-closed data handling", async () => {
   const html = await readFile(path.join(dist, "pulse.html"), "utf8");
   assert.doesNotMatch(html, /fetch\(["']\/api\/pulse/);
   assert.match(html, /fetch\(["']\/pulse-status\.json/);
@@ -146,18 +172,21 @@ test("Grid policy is contextual, paper-only, and denies capital effect", async (
   assert.match(html, /capital_permission=DENY/);
 });
 
-test("Every DuckDNS destination is visibly degraded and no missing internal pricing CTA remains", async () => {
+test("Every DuckDNS destination uses visitor-facing freshness copy and no missing pricing CTA remains", async () => {
   let duckDnsLinks = 0;
+  let freshnessNotes = 0;
   for (const name of (await readdir(dist)).filter((name) => name.endsWith(".html"))) {
     const html = await readFile(path.join(dist, name), "utf8");
     assert.doesNotMatch(html, /href="http:\/\/sovereign-arena\.duckdns\.org/i, name);
     for (const match of html.matchAll(/<a\b[^>]*href="https:\/\/sovereign-arena\.duckdns\.org\/[^"]*"[^>]*>/gi)) {
       duckDnsLinks += 1;
-      assert.match(match[0], /data-r51-link-status="LIVE_DEGRADED"/i, name);
+      assert.doesNotMatch(match[0], /data-r51-link-status=/i, name);
     }
+    freshnessNotes += html.split("Свежесть не подтверждена").length - 1;
     assert.doesNotMatch(html, /href="\/api\/pricing"/i, name);
   }
   assert.equal(duckDnsLinks, 39);
+  assert.equal(freshnessNotes, 39);
 });
 
 test("conflicting product counts and historical offers are visibly qualified", async () => {
@@ -192,7 +221,8 @@ test("conflicting product counts and historical offers are visibly qualified", a
     /class="btn btn-(?:main|ghost)" href="https:\/\/t\.me\/bitai1_bot"/,
   );
   assert.match(audit, /Historical offer snapshot/);
-  assert.match(audit, /data-cta-status="STATIC_DEMO"/);
+  assert.doesNotMatch(audit, /data-cta-status=/);
+  assert.match(audit, /Снимок данных:/);
 });
 
 test("all internal page links resolve in the candidate", async () => {
