@@ -35,6 +35,8 @@ const nav = `<nav class="sa-topnav"><div class="sa-topnav-in"><a class="sa-brand
   link("contact","🔒 @BiTFormer"),
 ].join("")}</div></div></nav>`;
 
+const cryptoRiskDisclaimer = "Здесь — личная практика и исследования автора. Это не инвестиционный совет и не предложение управлять чужими средствами. Торговля криптоактивами может привести к потере всех вложенных денег; прошлые результаты не гарантируют будущих.";
+
 const footer = `<footer class="sa-footer"><div class="sa-foot-in"><div class="sa-eco-row">${[
   '<a href="/">🏁 Sovereign Arena</a>',
   link("bitevo","🤖 BitEvo"),
@@ -48,7 +50,7 @@ const footer = `<footer class="sa-footer"><div class="sa-foot-in"><div class="sa
   link("sovereign-twin","🧬 Sovereign Twin"),
   link("channel","✈️ @BitmasterTm"),
   link("contact","🔒 @BiTFormer"),
-].join("")}</div><div class="sa-disc">Sovereign Arena · BitEvo · paper/research evidence lab · can_trade=false · capital_permission=DENY · not financial advice</div></div></footer>`;
+].join("")}</div><div class="sa-risk-disclaimer">${cryptoRiskDisclaimer}</div><div class="sa-disc">Sovereign Arena · BitEvo · paper/research evidence lab · can_trade=false · capital_permission=DENY · not financial advice</div></div></footer>`;
 
 const intakeUrl = "https://bitevoagentsite.vercel.app/audit-intake";
 const canonicalAudit = "https://bitevoagentsite.vercel.app/agent-authority-audit";

@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { after, before, test } from "node:test";
@@ -26,6 +27,8 @@ const allowedStatuses = new Set([
   "PAPER_ONLY",
   "OFFLINE",
 ]);
+const cryptoRiskDisclaimer = "Здесь — личная практика и исследования автора. Это не инвестиционный совет и не предложение управлять чужими средствами. Торговля криптоактивами может привести к потере всех вложенных денег; прошлые результаты не гарантируют будущих.";
+assert.equal(createHash("sha256").update(cryptoRiskDisclaimer, "utf8").digest("hex"), "6dd6a7500f9265a42e1f35bf0981cfdf1da0217bffcd0e01dc8af5e6d7b232dc");
 
 let server;
 let origin;
@@ -72,6 +75,8 @@ test("all primary routes return 200 and exactly one allowed truth classification
     assert.ok(allowedStatuses.has(matches[0][1]), route);
     assert.equal(matches[0][1], expected, route);
     assert.match(html, /Agent Authority & Evidence Audit/);
+    assert.equal(html.split(cryptoRiskDisclaimer).length - 1, 1, `${route} exact crypto disclaimer once`);
+    assert.doesNotMatch(html, /мы не получаем доступа к вашим средствам|we never get access to your funds/i, `${route} unconfirmed funds-access claim omitted`);
     assert.match(
       html,
       /href="https:\/\/bitevoagentsite\.vercel\.app\/audit-intake"[^>]*data-cta-status="STATIC_DEMO"/,
