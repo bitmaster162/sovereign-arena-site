@@ -30,8 +30,8 @@ const allowedStatuses = new Set([
 ]);
 const cryptoRiskDisclaimer = "Здесь — личная практика и исследования автора. Это не инвестиционный совет и не предложение управлять чужими средствами. Торговля криптоактивами может привести к потере всех вложенных денег; прошлые результаты не гарантируют будущих.";
 assert.equal(createHash("sha256").update(cryptoRiskDisclaimer, "utf8").digest("hex"), "6dd6a7500f9265a42e1f35bf0981cfdf1da0217bffcd0e01dc8af5e6d7b232dc");
-const visitorSnapshotPrefix = "Снимок данных:";
-assert.equal(createHash("sha256").update(visitorSnapshotPrefix, "utf8").digest("hex"), "b1ea223400d328d0cc09818bf45db6b3e432d0735d6e8c8aae08552752aac12a");
+const visitorSnapshotPrefix = "Данные — снимок от 2026-07-29.";
+assert.equal(createHash("sha256").update(visitorSnapshotPrefix, "utf8").digest("hex"), "116d5b98dd14a1dbc067657b7f6a451428c43a783b41ee3e56c7966bd224c630");
 
 function routeFile(route) {
   return route === "/" ? "index.html" : `${route.slice(1)}.html`;
@@ -44,6 +44,28 @@ function extractInternalSummary(html) {
   assert.ok(surface, "internal route summary exists");
   return surface;
 }
+
+function visitorSafeSummary(text) {
+  return text
+    .replaceAll("DuckDNS/Grafana", "внешний dashboard endpoint")
+    .replaceAll("DuckDNS", "внешний endpoint")
+    .replaceAll("Grafana", "dashboard")
+    .replaceAll("current verdict feed unavailable", "текущий авто-вердикт не подтверждён")
+    .replaceAll("Count provenance", "Источник чисел")
+    .replaceAll("LIVE_DEGRADED", "Свежесть не подтверждена")
+    .replaceAll("STATIC_DEMO", "Исторический снимок");
+}
+
+const publicForbiddenPatterns = [
+  /STATIC_DEMO/i,
+  /LIVE_DEGRADED/i,
+  /source=dpl_/i,
+  /observed=/i,
+  /DuckDNS/i,
+  /Grafana/i,
+  /current verdict feed unavailable/i,
+  /Count provenance/i,
+];
 
 let server;
 let origin;
@@ -94,10 +116,13 @@ test("internal classifications stay in source while public routes expose one vis
     assert.equal(response.status, 200, route);
     const html = await response.text();
     assert.equal(html.split(visitorSnapshotPrefix).length - 1, 1, `${route} visitor snapshot count`);
-    assert.ok(html.includes(summary), `${route} preserves internal route summary verbatim`);
+    assert.ok(html.includes(visitorSafeSummary(summary)), `${route} exposes visitor-safe route summary`);
     assert.doesNotMatch(html, /data-(?:surface-status|cta-status|r51-link-status)=/i, `${route} public status attrs removed`);
     assert.doesNotMatch(html, /class="(?:r51-status|r51-truth-meta|r51-link-state|r51-card-state)"/i, `${route} public debug badge classes removed`);
     assert.doesNotMatch(html, /source=dpl_|observed=/i, `${route} source deployment debug metadata removed`);
+    for (const pattern of publicForbiddenPatterns) {
+      assert.doesNotMatch(html, pattern, `${route} public forbidden vocabulary removed: ${pattern}`);
+    }
     assert.match(html, /Agent Authority & Evidence Audit/);
     assert.match(html, /href="https:\/\/bitevoagentsite\.vercel\.app\/audit-intake"/, `${route} canonical BitEvo audit-intake CTA`);
     assert.equal(html.split(cryptoRiskDisclaimer).length - 1, 1, `${route} exact crypto disclaimer once`);
@@ -172,21 +197,24 @@ test("Grid policy is contextual, paper-only, and denies capital effect", async (
   assert.match(html, /capital_permission=DENY/);
 });
 
-test("Every DuckDNS destination uses visitor-facing freshness copy and no missing pricing CTA remains", async () => {
-  let duckDnsLinks = 0;
-  let freshnessNotes = 0;
+test("public build removes provider/debug vocabulary and raw Arena dependency hosts", async () => {
+  let sourceDuckDnsLinks = 0;
+  let publicDuckDnsLinks = 0;
+  let dependencyFallbackLinks = 0;
+  for (const name of (await readdir(site)).filter((name) => name.endsWith(".html"))) {
+    const sourceHtml = await readFile(path.join(site, name), "utf8");
+    sourceDuckDnsLinks += [...sourceHtml.matchAll(/href="https?:\/\/sovereign-arena\.duckdns\.org\/[^"]*"/gi)].length;
+  }
   for (const name of (await readdir(dist)).filter((name) => name.endsWith(".html"))) {
     const html = await readFile(path.join(dist, name), "utf8");
-    assert.doesNotMatch(html, /href="http:\/\/sovereign-arena\.duckdns\.org/i, name);
-    for (const match of html.matchAll(/<a\b[^>]*href="https:\/\/sovereign-arena\.duckdns\.org\/[^"]*"[^>]*>/gi)) {
-      duckDnsLinks += 1;
-      assert.doesNotMatch(match[0], /data-r51-link-status=/i, name);
-    }
-    freshnessNotes += html.split("Свежесть не подтверждена").length - 1;
+    publicDuckDnsLinks += [...html.matchAll(/href="https?:\/\/sovereign-arena\.duckdns\.org\/[^"]*"/gi)].length;
+    dependencyFallbackLinks += [...html.matchAll(/href="\/boards#dependency-status"/g)].length;
+    for (const pattern of publicForbiddenPatterns) assert.doesNotMatch(html, pattern, name);
     assert.doesNotMatch(html, /href="\/api\/pricing"/i, name);
   }
-  assert.equal(duckDnsLinks, 39);
-  assert.equal(freshnessNotes, 39);
+  assert.equal(sourceDuckDnsLinks, 39, "internal source retains 39 qualified dependency links");
+  assert.equal(publicDuckDnsLinks, 0, "public build exposes zero raw Arena dependency hosts");
+  assert.equal(dependencyFallbackLinks, 39, "all raw dependency links fail closed to visitor dependency status");
 });
 
 test("conflicting product counts and historical offers are visibly qualified", async () => {
@@ -222,7 +250,7 @@ test("conflicting product counts and historical offers are visibly qualified", a
   );
   assert.match(audit, /Historical offer snapshot/);
   assert.doesNotMatch(audit, /data-cta-status=/);
-  assert.match(audit, /Снимок данных:/);
+  assert.match(audit, /Данные — снимок от 2026-07-29\./);
 });
 
 test("all internal page links resolve in the candidate", async () => {
