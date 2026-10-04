@@ -27,7 +27,8 @@ const expected = [
   "vercel.json",
 ];
 
-const visitorSnapshotPrefix = "Снимок данных:";
+const visitorSnapshotDate = "2026-07-29";
+const visitorSnapshotPrefix = `Данные — снимок от ${visitorSnapshotDate}.`;
 
 function cleanCta(anchor) {
   return anchor.replace(/\sdata-cta-status="[^"]*"/g, "");
@@ -38,6 +39,24 @@ function visitorBadgeCopy(status) {
   if (status === "OFFLINE") return "Текущая доступность не опубликована";
   if (status === "LIVE_VERIFIED") return "Проверено на момент снимка";
   return "Исторический snapshot";
+}
+
+function sanitizeVisitorVocabulary(text) {
+  return text
+    .replaceAll("DuckDNS/Grafana", "внешний dashboard endpoint")
+    .replaceAll("DuckDNS", "внешний endpoint")
+    .replaceAll("Grafana", "dashboard")
+    .replaceAll("current verdict feed unavailable", "текущий авто-вердикт не подтверждён")
+    .replaceAll("Count provenance", "Источник чисел")
+    .replaceAll("LIVE_DEGRADED", "Свежесть не подтверждена")
+    .replaceAll("STATIC_DEMO", "Исторический снимок");
+}
+
+function sanitizeDependencyLinks(html) {
+  return html.replace(
+    /href="https?:\/\/sovereign-arena\.duckdns\.org\/[^"]*"/gi,
+    'href="/boards#dependency-status"',
+  );
 }
 
 function sanitizePublicHtml(input, name) {
@@ -64,7 +83,7 @@ function sanitizePublicHtml(input, name) {
   }
 
   if (!summary) throw new Error(`${name}: visitor snapshot summary missing`);
-  const publicBand = `<section class="r51-snapshot" aria-label="Снимок данных"><p><strong>${visitorSnapshotPrefix}</strong> ${summary}</p>${cta}${safety}</section>`;
+  const publicBand = `<section class="r51-snapshot" aria-label="Снимок данных"><p><strong>${visitorSnapshotPrefix}</strong> ${sanitizeVisitorVocabulary(summary)}</p>${cta}${safety}</section>`;
   html = html.replace(band, publicBand);
 
   html = html.replace(/\sdata-(?:surface-status|cta-status|r51-link-status)="[^"]*"/g, "");
@@ -78,6 +97,8 @@ function sanitizePublicHtml(input, name) {
   );
   html = html.replace(/<strong class="r51-status">[\s\S]*?<\/strong>/g, "");
   html = html.replace(/<span class="r51-truth-meta">[\s\S]*?<\/span>/g, "");
+  html = sanitizeDependencyLinks(html);
+  html = sanitizeVisitorVocabulary(html);
 
   const forbidden = [
     /data-surface-status=/,
@@ -87,8 +108,14 @@ function sanitizePublicHtml(input, name) {
     /class="r51-truth-meta"/,
     /class="r51-link-state"/,
     /class="r51-card-state"/,
-    /source=dpl_/,
-    /observed=/,
+    /source=dpl_/i,
+    /observed=/i,
+    /STATIC_DEMO/i,
+    /LIVE_DEGRADED/i,
+    /DuckDNS/i,
+    /Grafana/i,
+    /current verdict feed unavailable/i,
+    /Count provenance/i,
   ];
   for (const pattern of forbidden) {
     if (pattern.test(html)) throw new Error(`${name}: public debug marker survived: ${pattern}`);
