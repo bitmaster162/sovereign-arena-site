@@ -30,7 +30,7 @@ try {
     && data.source.failed_predecessor_endpoint === "/api/pulse"
     && data.source.failed_predecessor_observation === "HTTP_404"
     && typeof data.observed_at === "string"
-    && !Number.isNaN(Date.parse(data.observed_at))
+    && Date.parse(data.observed_at) <= Date.now()
     && data.producer_heartbeat === null
     && data.freshness === "UNAVAILABLE"
     && data.metrics === null
