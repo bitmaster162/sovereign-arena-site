@@ -7,7 +7,7 @@ const html = await readFile(new URL("../dist/pulse.html", import.meta.url), "utf
 const status = JSON.parse(await readFile(new URL("../dist/pulse-status.json", import.meta.url), "utf8"));
 const script = html.match(/<script type="module">([\s\S]*?)<\/script>/)?.[1];
 
-async function renderStatus(response) {
+async function renderStatus(response, clock = Date) {
   const nodes = new Map();
   const urls = [];
   function element(selector) {
@@ -19,6 +19,7 @@ async function renderStatus(response) {
 
   assert.ok(script, "built Pulse module exists");
   await runInNewContext("(async () => {" + script + "})()", {
+    Date: clock,
     document: { getElementById: element, querySelector: element },
     fetch: async (url) => {
       urls.push(url);
@@ -56,5 +57,19 @@ test("built Pulse script hides telemetry for malformed evidence or an unavailabl
     assert.equal(element("pulse-truth").dataset.schemaValid, "false");
     assert.equal(element("[data-observed]").textContent, "");
     assert.match(element("[data-reason]").textContent, /недоступен или не прошёл проверку/);
+  }
+});
+
+test("Pulse accepts observations at or before the clock and hides future observations", async () => {
+  const now = Date.parse("2026-11-24T02:00:00.000Z");
+  class FixedDate extends Date {
+    static now() { return now; }
+  }
+  for (const offset of [-1, 0, 1]) {
+    const observed_at = new Date(now + offset).toISOString();
+    const response = { ok: true, json: async () => ({ ...status, observed_at }) };
+    const element = await renderStatus(response, FixedDate);
+    assert.equal(element("pulse-truth").dataset.schemaValid, String(offset <= 0));
+    assert.equal(element("[data-observed]").textContent, offset <= 0 ? observed_at : "");
   }
 });
